@@ -12,7 +12,7 @@ Thumbs.db
 # Ignorar carpetas de datos generados
 postgres_data/
 home/
-#db/postgres_data/
+db/postgres_data/
 
 # Ignorar archivos de construcción de Python
 __pycache__/
