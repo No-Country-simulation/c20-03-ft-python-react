@@ -1,0 +1,38 @@
+# Ignorar archivos y carpetas relacionados con Git
+.git
+.gitignore
+
+# Ignorar archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de configuración de entorno
+.env
+.env.*
+
+# Ignorar carpetas de datos generados
+db/postgres_data/
+backend/home/
+
+# Ignorar archivos y carpetas innecesarios para la construcción
+backend/__pycache__/
+backend/*.pyc
+backend/*.pyo
+
+frontend/node_modules/
+frontend/.next/
+
+# Ignorar archivos temporales y de compilación
+*.tmp
+*.bak
+*.out
+*.o
+*.a
+*.so
+
+# Ignorar archivos específicos que no deberían incluirse en la imagen Docker
+README.md
+deploy.sh
+deploy.sh_disable
+docker-compose.yml
+*_disable
