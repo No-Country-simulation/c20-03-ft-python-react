@@ -1,5 +1,5 @@
 # Otros
-db/
+#db/
 *_disable
 # Node modules y dependencias
 frontend/node_modules/
@@ -14,8 +14,8 @@ frontend/logs/
 frontend/*.log
 
 # Archivos de entorno y configuración local
-*.env
-*.env.local
+#*.env
+#*.env.local
 
 # Archivos generados por Python
 backend/__pycache__/
@@ -29,22 +29,8 @@ backend/.venv/
 backend/postgres_data/
 frontend/postgres_data/
 
-# Archivos de configuración de Docker
-docker-compose.override.yml
-docker-compose.prod.yml
-
 # Archivos de sistema y editor
 .DS_Store
-*.swp
-*.swo
-*.sublime-workspace
-*.sublime-project
-*.idea/
-
-# Archivos temporales de editor
-*.log
-*.tmp
-*.bak
 
 # Archivos de compilación
 frontend/public/
@@ -65,32 +51,3 @@ frontend/.cache/
 # Ignorar archivos y directorios específicos de pruebas
 frontend/__tests__/
 backend/tests/
-
-# Ignorar otros archivos y directorios específicos del entorno
-*.pid
-*.seed
-*.sqlite3
-*.db
-*.sql
-*.dump
-*.bak
-*.old
-*.swp
-*.tmp
-*.log
-*.coverage
-
-# Ignorar archivos de configuración específica del sistema
-*.pid
-*.seed
-*.sqlite3
-*.db
-*.sql
-*.dump
-*.bak
-*.old
-*.swp
-*.tmp
-*.log
-*.coverage
-
