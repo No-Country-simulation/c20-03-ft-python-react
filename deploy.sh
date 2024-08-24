@@ -6,11 +6,11 @@ REPO_DIR="/u/docker/c20-03-ft-python-react"
 # 0. Nos movemos al directorio del repositorio
 cd $REPO_DIR || { echo "Directorio no encontrado: $REPO_DIR"; exit 1; }
 
-# 1. Moverse a la rama main y actualizar
+# 1. Moverse a la rama main/deploy y actualizar
 echo "Actualizando repositorio..."
-git checkout main
+git checkout deploy
 git fetch --all
-git pull origin main
+git pull origin deploy
 
 # 2. Construir la imagen Docker (sin tag)
 echo "Construyendo la imagen Docker..."
