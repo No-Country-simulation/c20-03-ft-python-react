@@ -1,2 +1,46 @@
-# Ignorando
+# Ignorar archivos generados por el sistema operativo
+.DS_Store
+Thumbs.db
+
+# Ignorar archivos de configuración de entorno
+#.env
+.env.*
+
+# Ignorar archivos de log
+*.log
+
+# Ignorar carpetas de datos generados
+postgres_data/
+home/
+#db/postgres_data/
+
+# Ignorar archivos de construcción de Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Ignorar dependencias de Node.js
+frontend/node_modules/
+frontend/.next/
+
+# Ignorar archivos de lock
+backend/requirements.txt.lock
+frontend/package-lock.json
+
+# Ignorar carpetas específicas de editor/IDE
+.vscode/
+.idea/
+*.swp
+
+# Ignorar configuraciones locales de Docker
 *_disable
+
+# Ignorar archivos de compilación
+*.out
+*.o
+*.a
+*.so
+
+# Ignorar archivos temporales
+*.tmp
+*.bak
