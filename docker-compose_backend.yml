@@ -30,15 +30,3 @@ services:
       - "8030:8000"
     depends_on:
       - db-back
-
-  nextjs-front:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: nextjs-front
-    hostname: nextjs-front
-    volumes:
-      - ./frontend:/app
-    ports:
-      - "3030:3000"
-
