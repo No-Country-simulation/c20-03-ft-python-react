@@ -1,0 +1,27 @@
+name: Deploy on PR Merge
+
+on:
+  pull_request:
+    branches:
+      - main
+    types: 
+      - closed
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v3
+
+      - name: executing remote ssh commands using ssh key
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          script: ls -1 /u/docker/
+#          script: bash /u/docker/deploy.sh

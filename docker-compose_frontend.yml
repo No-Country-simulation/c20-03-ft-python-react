@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  nextjs-front:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: nextjs-front
+    hostname: nextjs-front
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "3030:3000"
+
