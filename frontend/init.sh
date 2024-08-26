@@ -8,3 +8,4 @@ npm install
 echo "Iniciando el servidor Next.js..."
 npm run dev
 
+

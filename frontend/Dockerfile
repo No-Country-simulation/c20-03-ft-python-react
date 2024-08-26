@@ -20,5 +20,6 @@ RUN chmod +x init.sh
 EXPOSE 3000
 
 # Comando por defecto para ejecutar el script init.sh
-CMD ["./init.sh"]
+ CMD ["./init.sh"]
 
+# CMD ["sh", "./init.sh"]
