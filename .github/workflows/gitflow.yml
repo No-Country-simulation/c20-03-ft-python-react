@@ -1,32 +1,32 @@
-name: Deploy and Mirror on PR Merge
-
-on:
-  pull_request:
-    branches:
-      - main
-    types:
-      - closed
-  push:
-  delete:
-
-jobs:
-  deploy:
-    if: github.event.pull_request.merged == true
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Check out the repository
-        uses: actions/checkout@v3
-
-      - name: Executing remote SSH commands using SSH key
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
-          script: /u/docker/c20-03-ft-python-react/test.sh
-
+#name: Deploy and Mirror on PR Merge
+#
+#on:
+#  pull_request:
+#    branches:
+#      - main
+#    types:
+#      - closed
+#  push:
+#  delete:
+#
+#jobs:
+#  deploy:
+#    if: github.event.pull_request.merged == true
+#    runs-on: ubuntu-latest
+#
+#    steps:
+#      - name: Check out the repository
+#        uses: actions/checkout@v3
+#
+#      - name: Executing remote SSH commands using SSH key
+#        uses: appleboy/ssh-action@v1.0.3
+#        with:
+#          host: ${{ secrets.HOST }}
+#          username: ${{ secrets.USERNAME }}
+#          key: ${{ secrets.KEY }}
+#          port: ${{ secrets.PORT }}
+#          script: /u/docker/c20-03-ft-python-react/test.sh
+#
 #  mirror:
 #    runs-on: ubuntu-latest
 #    needs: deploy
