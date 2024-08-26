@@ -4,7 +4,7 @@ Este proyecto es una aplicación web que combina un backend desarrollado en Djan
 
 ## Estructura del Proyecto
 
-La estructura principal del proyecto es la siguiente:
+La estructura principal del proyecto es la siguiente :
 
 ```
 c20-03-ft-python-react/
