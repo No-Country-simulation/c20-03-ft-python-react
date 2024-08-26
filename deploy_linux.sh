@@ -19,9 +19,9 @@ cd $REPO_DIR || { echo "Directorio no encontrado: $REPO_DIR"; exit 1; }
 
 # 1. Moverse a la rama deploy y actualizar
 echo "Actualizando repositorio..."
-#git checkout main
-#git fetch --all
-#git pull origin main
+git checkout main
+git fetch --all
+git pull origin main
 
 # 2. Obtener el commit short para usarlo como tag
 COMMIT_SHORT=$(git rev-parse --short HEAD)
