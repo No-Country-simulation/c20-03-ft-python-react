@@ -13,7 +13,7 @@ services:
       - ./db/postgres_data:/var/lib/postgresql/data
 
   django-back:
-    image: backend:c7992c9
+    image: backend:247771f
     container_name: django-back
     hostname: django-back
     environment:
@@ -30,7 +30,7 @@ services:
       - db-back
 
   nextjs-front:
-    image: frontend:c7992c9
+    image: frontend:247771f
     container_name: nextjs-front
     hostname: nextjs-front
     volumes:
