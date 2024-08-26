@@ -8,19 +8,19 @@ on:
       - closed
 
 jobs:
-  deploy:
+  ssh_command:
     if: github.event.pull_request.merged == true
+    name: Run SSH command
     runs-on: ubuntu-latest
-
     steps:
-      - name: Check out the repository
-        uses: actions/checkout@v3
-
-      - name: executing remote ssh commands using ssh key
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Connect and run command on remote server
+        uses: and-fm/cloudflared-ssh-action@v3
         with:
-          host: ${{ secrets.HOST }}
-          username: ${{ secrets.USERNAME }}
-          key: ${{ secrets.KEY }}
-          port: ${{ secrets.PORT }}
-          script: /u/docker/c20-03-ft-python-react/test.sh
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USERNAME }}
+          private_key_filename: ${{ secrets.SSH_PRIVATE_KEY_FILENAME }}
+          private_key_value: ${{ secrets.SSH_PRIVATE_KEY_VALUE }}
+          port: ${{ secrets.SSH_PORT }}
+          service_token_id: ${{ secrets.SERVICE_TOKEN_ID }}
+          service_token_secret: ${{ secrets.SERVICE_TOKEN_SECRET }}
+          commands: /u/docker/c20-03-ft-python-react/test.sh
