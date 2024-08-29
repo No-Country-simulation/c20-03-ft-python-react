@@ -3,8 +3,8 @@
 # Función para mostrar el manual de uso
 mostrar_manual() {
   echo "Uso del script:"
-  echo "  $0"
-  echo "Este script no requiere argumentos. Utiliza el commit short como tag para Docker."
+  echo "  $0 [rama]"
+  echo "Este script acepta un argumento opcional para la rama de Git. Si no se proporciona, se usará 'main'."
 }
 
 # Variables genéricas
@@ -13,6 +13,9 @@ COMPOSE_FILE="docker-compose.yml"
 
 # Lista de servicios para construir imágenes
 SERVICES=("backend" "frontend")
+
+# Obtener la rama como argumento o usar 'main' por defecto
+BRANCH=${1:-main}
 
 # 0. Nos movemos al directorio del repositorio
 cd $REPO_DIR || { echo "Directorio no encontrado: $REPO_DIR"; exit 1; }
@@ -23,11 +26,11 @@ if [[ -n $(git status -s) ]]; then
   git stash push -m "Automated stash $(date +%F_%T)"
 fi
 
-# 2. Moverse a la rama main y actualizar
-echo "Actualizando repositorio..."
-git checkout main
+# 2. Moverse a la rama especificada y actualizar
+echo "Actualizando repositorio en la rama $BRANCH..."
+git checkout $BRANCH
 git fetch --all
-git pull origin main
+git pull origin $BRANCH
 
 # 3. Obtener el commit short para usarlo como tag
 COMMIT_SHORT=$(git rev-parse --short HEAD)
