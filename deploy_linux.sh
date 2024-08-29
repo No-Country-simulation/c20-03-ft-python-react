@@ -48,10 +48,12 @@ for SERVICE in "${SERVICES[@]}"; do
   else
     echo "Construyendo la imagen Docker para $SERVICE con tag $IMAGE_TAG..."
     docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ./${SERVICE}/
+    sleep 10
 
     # Actualizar el archivo docker-compose.yml para usar el nuevo tag
     echo "Actualizando $COMPOSE_FILE para el servicio $SERVICE con el tag $IMAGE_TAG..."
     sed -i "s|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|g" $COMPOSE_FILE
+    sleep 10
   fi
 done
 
