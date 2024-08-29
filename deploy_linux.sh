@@ -48,10 +48,12 @@ for SERVICE in "${SERVICES[@]}"; do
   else
     echo "Construyendo la imagen Docker para $SERVICE con tag $IMAGE_TAG..."
     docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ./${SERVICE}/
+    sleep 10
 
     # Actualizar el archivo docker-compose.yml para usar el nuevo tag
     echo "Actualizando $COMPOSE_FILE para el servicio $SERVICE con el tag $IMAGE_TAG..."
     sed -i "s|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|g" $COMPOSE_FILE
+    sleep 10
   fi
 done
 
@@ -60,7 +62,7 @@ done
 
 # 6. Levantar los nuevos contenedores
 echo "Actualizando contenedores..."
-docker-compose -f $COMPOSE_FILE up -d
+docker-compose -f $COMPOSE_FILE up -d --remove-orphans
 
 # 7. Limpiar stashes antiguos si hay más de 5
 MAX_STASHES=2
