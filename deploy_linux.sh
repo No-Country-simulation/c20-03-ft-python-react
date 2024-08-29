@@ -17,17 +17,23 @@ SERVICES=("backend" "frontend")
 # 0. Nos movemos al directorio del repositorio
 cd $REPO_DIR || { echo "Directorio no encontrado: $REPO_DIR"; exit 1; }
 
-# 1. Moverse a la rama deploy y actualizar
-echo "Actualizando repositorio..."
-#git checkout main
-#git fetch --all
-#git pull origin main
+# 1. Guardar cambios locales si hay alguno
+if [[ -n $(git status -s) ]]; then
+  echo "Guardando cambios locales..."
+  git stash push -m "Automated stash $(date +%F_%T)"
+fi
 
-# 2. Obtener el commit short para usarlo como tag
+# 2. Moverse a la rama main y actualizar
+echo "Actualizando repositorio..."
+git checkout main
+git fetch --all
+git pull origin main
+
+# 3. Obtener el commit short para usarlo como tag
 COMMIT_SHORT=$(git rev-parse --short HEAD)
 IMAGE_TAG="${COMMIT_SHORT}"
 
-# 3. Construir las imágenes y levantar los servicios
+# 4. Construir las imágenes y levantar los servicios
 for SERVICE in "${SERVICES[@]}"; do
   IMAGE_NAME="${SERVICE}"
 
@@ -44,9 +50,22 @@ for SERVICE in "${SERVICES[@]}"; do
   fi
 done
 
-# 4. Mostrar logs (opcional)
+# 5. Mostrar logs (opcional)
 #docker-compose logs -f
 
-# 5. Levantar los nuevos contenedores
+# 6. Levantar los nuevos contenedores
 echo "Actualizando contenedores..."
 docker-compose up -d
+
+# 7. Limpiar stashes antiguos si hay más de 5
+MAX_STASHES=2
+STASH_COUNT=$(git stash list | wc -l)
+if [ "$STASH_COUNT" -gt "$MAX_STASHES" ]; then
+  echo "Limpiando stashes antiguos..."
+  git stash list | tail -n +$(($MAX_STASHES + 1)) | while read -r stash; do
+    stash_ref=$(echo "$stash" | awk '{print $1}')
+    echo "Eliminando stash $stash_ref"
+    git stash drop "$stash_ref"
+  done
+fi
+
