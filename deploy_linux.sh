@@ -3,19 +3,21 @@
 # Función para mostrar el manual de uso
 mostrar_manual() {
   echo "Uso del script:"
-  echo "  $0 [rama]"
-  echo "Este script acepta un argumento opcional para la rama de Git. Si no se proporciona, se usará 'main'."
+  echo "  $0 [rama] [archivo-compose]"
+  echo "Este script acepta dos argumentos opcionales:"
+  echo "  1. Rama de Git (por defecto 'main')."
+  echo "  2. Archivo docker-compose (por defecto 'docker-compose.yml')."
 }
 
 # Variables genéricas
 REPO_DIR="/u/docker/c20-03-ft-python-react"  # Actualiza esta variable con la ruta a tu repositorio
-COMPOSE_FILE="docker-compose.yml"
 
 # Lista de servicios para construir imágenes
 SERVICES=("backend" "frontend")
 
-# Obtener la rama como argumento o usar 'main' por defecto
+# Obtener la rama y el archivo compose como argumentos o usar valores por defecto
 BRANCH=${1:-main}
+COMPOSE_FILE=${2:-docker-compose.yml}
 
 # 0. Nos movemos al directorio del repositorio
 cd $REPO_DIR || { echo "Directorio no encontrado: $REPO_DIR"; exit 1; }
@@ -34,11 +36,11 @@ git pull origin $BRANCH
 
 # 3. Obtener el commit short para usarlo como tag
 COMMIT_SHORT=$(git rev-parse --short HEAD)
-IMAGE_TAG="${COMMIT_SHORT}"
+IMAGE_TAG="${BRANCH}-${COMMIT_SHORT}"
 
 # 4. Construir las imágenes y levantar los servicios
 for SERVICE in "${SERVICES[@]}"; do
-  IMAGE_NAME="${SERVICE}"
+  IMAGE_NAME="${SERVICE}-${BRANCH}"
 
   # Verificar si la imagen con el tag específico ya existe
   if docker images --format "{{.Repository}}:{{.Tag}}" | grep -q "${IMAGE_NAME}:${IMAGE_TAG}"; then
@@ -48,8 +50,8 @@ for SERVICE in "${SERVICES[@]}"; do
     docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ./${SERVICE}/
 
     # Actualizar el archivo docker-compose.yml para usar el nuevo tag
-    echo "Actualizando docker-compose.yml para el servicio $SERVICE con el tag $IMAGE_TAG..."
-    sed -i "s|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|g" $COMPOSE_FILE
+    echo "Actualizando $COMPOSE_FILE para el servicio $SERVICE con el tag $IMAGE_TAG..."
+    sed -i "s|image: ${SERVICE}:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|g" $COMPOSE_FILE
   fi
 done
 
@@ -58,7 +60,7 @@ done
 
 # 6. Levantar los nuevos contenedores
 echo "Actualizando contenedores..."
-docker-compose up -d
+docker-compose -f $COMPOSE_FILE up -d
 
 # 7. Limpiar stashes antiguos si hay más de 5
 MAX_STASHES=2

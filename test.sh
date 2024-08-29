@@ -7,7 +7,7 @@ if [ $# -eq 0 ]; then
 fi
 
 BRANCH_NAME=$1
+COMPOSE_FILE=$2
 
-echo "Hola"
 echo "Nombre de la rama: $BRANCH_NAME"
-
+echo "Nombre del compose a usar: $COMPOSE_FILE"
