@@ -17,7 +17,7 @@ Este proyecto es una aplicación web de e-commerce que combina un backend desarr
 - **Frontend**: Next.js
 - **Base de Datos**: PostgreSQL
 - **Contenedorización**: Docker, Docker Compose
-- **Despliegue**: Script de despliegue en Linux (`deploy_linux.sh`)
+- **Despliegue**: Script de despliegue en el proceso de automatizacion (`deploy_linux.sh`)
 
 ### Estructura del Proyecto
 
@@ -30,7 +30,8 @@ c20-03-ft-python-react/
 ├── db/                     # Datos de la base de datos PostgreSQL
 ├── frontend/               # Código fuente del frontend en Next.js
 ├── deploy_linux.sh         # Script de despliegue
-├── docker-compose.yml      # Configuración general de Docker Compose para la aplicación completa
+├── docker-compose_dev.yml      # Configuración general de Docker Compose para la aplicación completa de Develop
+├── docker-compose_prod.yml      # Configuración general de Docker Compose para la aplicación completa de Produccion
 ├── docker-compose_backend.yml  # Configuración específica para el backend y base de datos
 ├── docker-compose_frontend.yml  # Configuración específica para el frontend
 └── README.md               # Este archivo
@@ -43,6 +44,23 @@ El proyecto se compone de los siguientes servicios Docker:
 - **db-back**: Servicio de base de datos PostgreSQL.
 - **django-back**: Servicio del backend en Django.
 - **nextjs-front**: Servicio del frontend en Next.js.
+
+### Endpoints Públicos
+
+#### Entorno de Producción (main)
+- **Frontend**: [https://front.avillalba.com.ar/](https://front.avillalba.com.ar/)
+- **Backend**: [https://back.avillalba.com.ar/](https://back.avillalba.com.ar/)
+
+#### Entorno de Desarrollo (develop)
+- **Frontend**: [https://front-dev.avillalba.com.ar/](https://front-dev.avillalba.com.ar/)
+- **Backend**: [https://back-dev.avillalba.com.ar/](https://back-dev.avillalba.com.ar/)
+
+### Endpoints Locales
+
+Para probar localmente, utiliza los siguientes endpoints:
+
+- **Frontend**: [http://localhost:3000](http://localhost:3000)
+- **Backend**: [http://localhost:8000](http://localhost:8000)
 
 ### Instrucciones de Uso
 
@@ -72,10 +90,6 @@ Para desplegar solo el frontend:
 docker-compose -f docker-compose_frontend.yml up --build
 ```
 
-### Script de Despliegue
-
-El proyecto incluye un script de despliegue (`deploy_linux.sh`) que automatiza el proceso de despliegue en entornos Linux.
-
 ### Variables de Entorno
 
 El proyecto utiliza las siguientes variables de entorno, que deben configurarse antes de ejecutar los servicios:
@@ -85,11 +99,3 @@ El proyecto utiliza las siguientes variables de entorno, que deben configurarse 
 - `DATABASE_NAME`: Nombre de la base de datos.
 - `DATABASE_USER`: Usuario de la base de datos.
 - `DATABASE_PASSWORD`: Contraseña del usuario de la base de datos.
-
-### Enlaces del Proyecto
-- **Repositorio GitHub**: [C20-03-FT-Python-React](https://github.com/No-Country-simulation/c20-03-ft-python-react)
-- **Sitio Web**: (pendiente si corresponde)
-
-### Contribuciones
-
-Si deseas contribuir al proyecto, por favor, abre un Pull Request o una Issue en este repositorio.

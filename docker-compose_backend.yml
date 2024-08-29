@@ -21,7 +21,7 @@ services:
     container_name: django-back
     hostname: django-back
     environment:
-      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_HOST: db-back
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USER: ${DATABASE_USER}

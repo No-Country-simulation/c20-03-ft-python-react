@@ -1,10 +1,10 @@
 version: '3.8'
 
 services:
-  db-back:
+  db-back-dev:
     image: postgres:16.4-alpine3.20
-    container_name: db-back
-    hostname: db-back
+    container_name: db-back-dev
+    hostname: db-back-dev
     environment:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
@@ -13,12 +13,12 @@ services:
     volumes:
       - ./db/postgres_data:/var/lib/postgresql/data
 
-  django-back:
+  django-back-dev:
     image: backend:c3a2cdc
-    container_name: django-back
-    hostname: django-back
+    container_name: django-back-dev
+    hostname: django-back-dev
     environment:
-      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_HOST: db-back-dev
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USER: ${DATABASE_USER}
@@ -28,19 +28,19 @@ services:
       DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
       DJANGO_TIME_ZONE: ${DJANGO_TIME_ZONE}
       TIME_ZONE_TZ: ${TIME_ZONE_TZ}
-    volumes:
-      - ./backend:/app
+#    volumes:
+#      - ./backend:/app
     ports:
-      - "8030:8000"
+      - "8031:8000"
     depends_on:
-      - db-back
+      - db-back-dev
 
-  nextjs-front:
+  nextjs-front-dev:
     image: frontend:c3a2cdc
-    container_name: nextjs-front
-    hostname: nextjs-front
-    volumes:
-      - ./frontend:/app
+    container_name: nextjs-front-dev
+    hostname: nextjs-front-dev
+#    volumes:
+#      - ./frontend:/app
     ports:
-      - "3030:3000"
+      - "3031:3000"
 
