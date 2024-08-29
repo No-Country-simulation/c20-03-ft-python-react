@@ -60,7 +60,7 @@ done
 
 # 6. Levantar los nuevos contenedores
 echo "Actualizando contenedores..."
-docker-compose -f $COMPOSE_FILE up -d
+docker-compose -f $COMPOSE_FILE up -d --remove-orphans
 
 # 7. Limpiar stashes antiguos si hay más de 5
 MAX_STASHES=2

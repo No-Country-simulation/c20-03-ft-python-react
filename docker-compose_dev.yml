@@ -14,7 +14,7 @@ services:
       - ./db/postgres_data:/var/lib/postgresql/data
 
   django-back-dev:
-    image: backend-develop:develop-2016bd2
+    image: backend-develop:develop-40734a7
     container_name: django-back-dev
     hostname: django-back-dev
     environment:
@@ -36,7 +36,7 @@ services:
       - db-back-dev
 
   nextjs-front-dev:
-    image: frontend-develop:develop-2016bd2
+    image: frontend-develop:develop-40734a7
     container_name: nextjs-front-dev
     hostname: nextjs-front-dev
 #    volumes:
