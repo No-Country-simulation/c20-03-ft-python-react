@@ -10,7 +10,7 @@ mostrar_manual() {
 }
 
 # Variables genéricas
-REPO_DIR="/u/docker/c20-03-ft-python-react"  # Actualiza esta variable con la ruta a tu repositorio
+REPO_DIR="$(dirname "$0")"  # Ruta al directorio donde se encuentra este script
 
 # Lista de servicios para construir imágenes
 SERVICES=("backend" "frontend")
