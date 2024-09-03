@@ -1,20 +1,44 @@
 from django.http import JsonResponse
-from .models import Joke
-import requests
-import datetime
+from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.http import require_POST, require_GET
+from django.contrib.auth.models import User
+from django.core.exceptions import ValidationError
+import json
 
-def index(request):
-  api_endpoint = "https://api.chucknorris.io/jokes/random"
-  response = requests.get(api_endpoint)
-  response.raise_for_status()
-  jsonResponse = response.json()
-  newJoke = Joke(content=jsonResponse['value'],added_at=datetime.datetime.now())
-  newJoke.save()
-  response_data = {}
+@csrf_exempt
+@require_POST
+def register(request):
+    try:
+        data = json.loads(request.body)
+        username = data.get('username')
+        password = data.get('password')
+        email = data.get('email')
 
-  response_data['jokes'] = [{
-    'value': j.content,
-    'addedAt': j.added_at
-  } for j in Joke.objects.order_by('-added_at')]
+        if not username or not password or not email:
+            return JsonResponse({'error': 'All fields are required'}, status=400)
 
-  return JsonResponse(response_data)
+        # Check if the user already exists
+        if User.objects.filter(username=username).exists():
+            return JsonResponse({'error': 'Username already exists'}, status=400)
+
+        user = User.objects.create_user(username=username, password=password, email=email)
+        user.save()
+        return JsonResponse({'message': 'User created successfully'}, status=201)
+    except ValidationError as e:
+        return JsonResponse({'error': str(e)}, status=400)
+    except json.JSONDecodeError:
+        return JsonResponse({'error': 'Invalid JSON'}, status=400)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+
+@csrf_exempt
+@require_GET
+def list_users(request):
+    try:
+        # Exclude superusers
+        users = User.objects.filter(is_superuser=False).values('username', 'email')
+        user_list = list(users)
+        return JsonResponse({'users': user_list}, safe=False)
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)
+

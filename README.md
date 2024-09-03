@@ -17,7 +17,7 @@ Este proyecto es una aplicación web de e-commerce que combina un backend desarr
 - **Frontend**: Next.js
 - **Base de Datos**: PostgreSQL
 - **Contenedorización**: Docker, Docker Compose
-- **Despliegue**: Script de despliegue en el proceso de automatizacion (`deploy_linux.sh`)
+- **Despliegue**: Script de despliegue en el proceso de automatización (`deploy_linux.sh`)
 
 ### Estructura del Proyecto
 
@@ -31,7 +31,7 @@ c20-03-ft-python-react/
 ├── frontend/               # Código fuente del frontend en Next.js
 ├── deploy_linux.sh         # Script de despliegue
 ├── docker-compose_dev.yml      # Configuración general de Docker Compose para la aplicación completa de Develop
-├── docker-compose_prod.yml      # Configuración general de Docker Compose para la aplicación completa de Produccion
+├── docker-compose_prod.yml      # Configuración general de Docker Compose para la aplicación completa de Producción
 ├── docker-compose_backend.yml  # Configuración específica para el backend y base de datos
 ├── docker-compose_frontend.yml  # Configuración específica para el frontend
 └── README.md               # Este archivo
@@ -99,3 +99,67 @@ El proyecto utiliza las siguientes variables de entorno, que deben configurarse 
 - `DATABASE_NAME`: Nombre de la base de datos.
 - `DATABASE_USER`: Usuario de la base de datos.
 - `DATABASE_PASSWORD`: Contraseña del usuario de la base de datos.
+
+### Endpoints de la API
+
+#### Registro de Usuario (POST)
+
+- **Endpoint**: `/api/v1/register/`
+- **Método**: POST
+- **Descripción**: Crea un nuevo usuario en la base de datos.
+- **Cuerpo de la Solicitud**:
+    ```json
+    {
+        "username": "usuario",
+        "password": "ContraseñaSegura123",
+        "email": "usuario@example.com"
+    }
+    ```
+- **Ejemplo de Solicitud**:
+    ```bash
+    curl -X POST http://localhost:8000/api/v1/register/ \
+    -H "Content-Type: application/json" \
+    -d '{
+        "username": "usuario",
+        "password": "ContraseñaSegura123",
+        "email": "usuario@example.com"
+    }'
+    ```
+- **Respuesta Exitosa**:
+    ```json
+    {
+        "message": "User created successfully"
+    }
+    ```
+- **Respuesta de Error**:
+    ```json
+    {
+        "error": "All fields are required"
+    }
+    ```
+
+#### Listado de Usuarios (GET)
+
+- **Endpoint**: `/api/v1/users/`
+- **Método**: GET
+- **Descripción**: Obtiene una lista de usuarios, excluyendo superusuarios.
+- **Ejemplo de Solicitud**:
+    ```bash
+    curl -X GET http://localhost:8000/api/v1/users/
+    ```
+- **Respuesta Exitosa**:
+    ```json
+    {
+        "users": [
+            {
+                "username": "usuario1",
+                "email": "usuario1@example.com"
+            },
+            {
+                "username": "usuario2",
+                "email": "usuario2@example.com"
+            }
+        ]
+    }
+    ```
+
