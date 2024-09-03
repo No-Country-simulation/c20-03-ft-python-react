@@ -10,7 +10,7 @@ services:
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
     volumes:
-      - ./db/postgres_data:/var/lib/postgresql/data
+      - ./db/postgres_data_test:/var/lib/postgresql/data
     ports:
       - "5432:5432" 
 
@@ -21,7 +21,7 @@ services:
     container_name: django-back
     hostname: django-back
     environment:
-      DATABASE_HOST: ${DATABASE_HOST}
+      DATABASE_HOST: db-back
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USER: ${DATABASE_USER}

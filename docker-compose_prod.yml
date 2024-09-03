@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  db-back-prod:
+    image: postgres:16.4-alpine3.20
+    container_name: db-back-prod
+    hostname: db-back-prod
+    environment:
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_DB: ${DATABASE_NAME}
+      TZ: ${TIME_ZONE_TZ}
+    volumes:
+      - ./db/postgres_data_prod:/var/lib/postgresql/data
+
+  django-back-prod:
+    image: backend-main:main-97fcbed
+    container_name: django-back-prod
+    hostname: django-back-prod
+    environment:
+      DATABASE_HOST: db-back-prod
+      DATABASE_PORT: ${DATABASE_PORT}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DJANGO_DEBUG: ${DJANGO_DEBUG}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      DJANGO_TIME_ZONE: ${DJANGO_TIME_ZONE}
+      TIME_ZONE_TZ: ${TIME_ZONE_TZ}
+#    volumes:
+#      - ./backend:/app
+    ports:
+      - "8030:8000"
+    depends_on:
+      - db-back-prod
+
+  nextjs-front-prod:
+    image: frontend-main:main-97fcbed
+    container_name: nextjs-front-prod
+    hostname: nextjs-front-prod
+#    volumes:
+#      - ./frontend:/app
+    ports:
+      - "3030:3000"
+
