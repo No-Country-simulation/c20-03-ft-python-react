@@ -3,21 +3,17 @@
 # Función para mostrar el manual de uso
 mostrar_manual() {
   echo "Uso del script:"
-  echo "  $0 [rama] [archivo-compose]"
-  echo "Este script acepta dos argumentos opcionales:"
+  echo "  $0 [rama] [archivo-compose] [directorio-repo]"
+  echo "Este script acepta tres argumentos opcionales:"
   echo "  1. Rama de Git (por defecto 'main')."
   echo "  2. Archivo docker-compose (por defecto 'docker-compose.yml')."
+  echo "  3. Directorio del repositorio (por defecto '/u/docker/examples/c20-03-ft-python-react')."
 }
 
-# Variables genéricas
-REPO_DIR="$(dirname "$0")"  # Ruta al directorio donde se encuentra este script
-
-# Lista de servicios para construir imágenes
-SERVICES=("backend" "frontend")
-
-# Obtener la rama y el archivo compose como argumentos o usar valores por defecto
+# Obtener la rama, el archivo compose y el directorio del repositorio como argumentos o usar valores por defecto
 BRANCH=${1:-main}
 COMPOSE_FILE=${2:-docker-compose.yml}
+REPO_DIR=${3:-/u/docker/examples}
 
 # 0. Nos movemos al directorio del repositorio
 cd $REPO_DIR || { echo "Directorio no encontrado: $REPO_DIR"; exit 1; }
@@ -38,7 +34,10 @@ git pull origin $BRANCH
 COMMIT_SHORT=$(git rev-parse --short HEAD)
 IMAGE_TAG="${BRANCH}-${COMMIT_SHORT}"
 
-# 4. Construir las imágenes y levantar los servicios
+# 4. Lista de servicios para construir imágenes
+SERVICES=("backend" "frontend")
+
+# 5. Construir las imágenes y levantar los servicios
 for SERVICE in "${SERVICES[@]}"; do
   IMAGE_NAME="${SERVICE}-${BRANCH}"
 
@@ -57,22 +56,22 @@ for SERVICE in "${SERVICES[@]}"; do
   fi
 done
 
-# 5. Mostrar logs (opcional)
-#docker-compose logs -f
-
 # 6. Levantar los nuevos contenedores
 echo "Actualizando contenedores..."
-docker-compose -f $COMPOSE_FILE up -d --remove-orphans
+docker-compose -f $COMPOSE_FILE up -d
 
-# 7. Limpiar stashes antiguos si hay más de 5
+# 7. Limpiar stashes antiguos si hay más de 2
 MAX_STASHES=2
 STASH_COUNT=$(git stash list | wc -l)
 if [ "$STASH_COUNT" -gt "$MAX_STASHES" ]; then
   echo "Limpiando stashes antiguos..."
   git stash list | tail -n +$(($MAX_STASHES + 1)) | while read -r stash; do
     stash_ref=$(echo "$stash" | awk '{print $1}')
-    echo "Eliminando stash $stash_ref"
-    git stash drop "$stash_ref"
+    if [[ "$stash_ref" =~ ^stash@{[0-9]+}$ ]]; then
+      echo "Eliminando stash $stash_ref"
+      git stash drop "$stash_ref" || echo "No se pudo eliminar el stash $stash_ref"
+    else
+      echo "Referencia de stash inválida: $stash_ref"
+    fi
   done
 fi
-

@@ -11,10 +11,10 @@ services:
       POSTGRES_DB: ${DATABASE_NAME}
       TZ: ${TIME_ZONE_TZ}
     volumes:
-      - ./db/postgres_data:/var/lib/postgresql/data
+      - ./db/postgres_data_dev:/var/lib/postgresql/data
 
   django-back-dev:
-    image: backend-develop:develop-31a0a3c
+    image: backend-develop:develop-222995c
     container_name: django-back-dev
     hostname: django-back-dev
     environment:
@@ -36,7 +36,7 @@ services:
       - db-back-dev
 
   nextjs-front-dev:
-    image: frontend-develop:develop-31a0a3c
+    image: frontend-develop:develop-222995c
     container_name: nextjs-front-dev
     hostname: nextjs-front-dev
 #    volumes:
