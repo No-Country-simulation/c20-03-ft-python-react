@@ -9,6 +9,7 @@ services:
       POSTGRES_USER: ${DATABASE_USER}
       POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
       POSTGRES_DB: ${DATABASE_NAME}
+      TZ: ${TIME_ZONE_TZ}
     volumes:
       - ./db/postgres_data_test:/var/lib/postgresql/data
     ports:
@@ -26,6 +27,11 @@ services:
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      DJANGO_DEBUG: ${DJANGO_DEBUG}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      DJANGO_TIME_ZONE: ${DJANGO_TIME_ZONE}
+      TIME_ZONE_TZ: ${TIME_ZONE_TZ}
     volumes:
       - ./backend:/app
     ports:
