@@ -6,3 +6,4 @@ djangorestframework
 drf-yasg
 djangorestframework-simplejwt
 gunicorn
+django-cors-headers
