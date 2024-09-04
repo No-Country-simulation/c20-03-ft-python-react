@@ -64,8 +64,8 @@ El proyecto se compone de los siguientes servicios Docker:
 
 Para consultar la documentación de la API, puedes utilizar las siguientes herramientas:
 
-- **Swagger UI**: [https://back.avillalba.com.ar/swagger/](https://back.avillalba.com.ar/api/v1/swagger/)
-- **Redoc**: [https://back.avillalba.com.ar/redoc/](https://back.avillalba.com.ar/api/v1/redoc/)
+- **Swagger UI**: [https://back.avillalba.com.ar/swagger/](https://back.avillalba.com.ar/swagger/)
+- **Redoc**: [https://back.avillalba.com.ar/redoc/](https://back.avillalba.com.ar/redoc/)
 
 Estas herramientas te permitirán explorar los endpoints de la API y probar las solicitudes directamente desde tu navegador.
 
