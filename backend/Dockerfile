@@ -14,7 +14,10 @@ RUN apt-get update && apt-get install -y \
     python3-dev \
     musl-dev \
     bash \
-    tzdata
+    tzdata \
+    nginx \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # Actualizar pip
 RUN pip install --upgrade pip
@@ -28,9 +31,14 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copiar el resto de los archivos de la aplicación
 COPY . .
 
+# Copiar el archivo de configuración de Nginx
+COPY nginx.conf /etc/nginx/nginx.conf
+
+# Exponer el puerto en el que Nginx estará escuchando
+EXPOSE 80
+
 # Hacer ejecutable el script init.sh
 RUN chmod +x init.sh
 
 # Comando por defecto para ejecutar el script init.sh
 CMD ["./init.sh"]
-
