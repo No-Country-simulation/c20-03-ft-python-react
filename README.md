@@ -171,17 +171,10 @@ Para crear un superusuario de Django, sigue estos pasos:
 
    Si estás utilizando Docker, primero accede al contenedor del backend:
    ```bash
-   docker-compose -f docker-compose_backend.yml exec django-back bash
+   docker-compose -f docker-compose_backend.yml exec django-back python manage.py createsuperuser
    ```
 
-2. **Ejecuta el Comando para Crear el Superusuario**:
-
-   Dentro del contenedor, ejecuta el siguiente comando:
-   ```bash
-   python manage.py createsuperuser
-   ```
-
-3. **Introduce la Información del Superusuario**:
+2. **Introduce la Información del Superusuario**:
 
    Se te pedirá que introduzcas un nombre de usuario, un correo electrónico y una contraseña para el superusuario. Introduce la información según se te solicite. Por ejemplo:
    ```
