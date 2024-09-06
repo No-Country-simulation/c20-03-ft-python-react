@@ -1,16 +1,24 @@
 import FlashSale from "./ui/flash-sale/flash-sale";
 import LandingPageCategories from "./ui/categorias/categories";
-import { testFlashSaleData } from "./lib/utils";
+import MasVendidos from "./ui/mas-vendidos/mas-vendidos";
+
+import { testProductData } from "./lib/utils";
 
 export default function LandingPage() {
 
-  const testData = testFlashSaleData(7); //se generan 7 items de prueba
+  const testFlashSaleData = testProductData(7); //se generan 7 items de prueba
+  const testMasVendidosData = testProductData(4);
   return (
     <div className="min-h-screen p-24">
-      <div className="mb-52">
-        <FlashSale productData={testData} />
+      <div className="mb-32">
+        <FlashSale productData={testFlashSaleData} />
       </div>
-      <LandingPageCategories />
+      <div className="mb-32">
+        <LandingPageCategories />
+      </div>
+      <div className="mb-32">
+        <MasVendidos productData={testMasVendidosData}/>
+      </div>
     </div>
   );
 } 

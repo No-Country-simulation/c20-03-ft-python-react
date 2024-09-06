@@ -8,7 +8,7 @@ export interface flashSaleDataInterface {
     productID: number
 }
 
-export function testFlashSaleData(numberOfItems: number) { //mockup data, delete after testing
+export function testProductData(numberOfItems: number) { //mockup data, delete after testing
 
     let testData: flashSaleDataInterface[] = []
     for (let i = 0; i< numberOfItems; i++){

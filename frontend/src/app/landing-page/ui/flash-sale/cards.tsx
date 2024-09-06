@@ -8,12 +8,14 @@ import Typography from '@mui/material/Typography';
 import { flashSaleDataInterface } from '../../lib/utils';
 
 export default function ProductCard({
-    productData
+    productData,
+    width   //default width of the card is set to 384px
 }:{
-    productData: flashSaleDataInterface
+    productData: flashSaleDataInterface,
+    width?: number | string
 }){
   return (
-    <Card sx={{ maxWidth: 384, mx: 1, borderRadius: "16px"} } variant="outlined">
+    <Card sx={{ width: `${width ? width : 384}`, minWidth: 384, mx: 1, borderRadius: "16px"} } variant="outlined">
       <CardMedia
         sx={{ height: 512, bgcolor: 'text.disabled'}}
       />
