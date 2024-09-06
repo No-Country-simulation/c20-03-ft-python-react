@@ -19,7 +19,7 @@ export default function FlashSale({productData}: {productData: flashSaleDataInte
         </div>
         <div className="flex justify-center">
           {categories.map((category, id) =>(
-            <h2 onClick={() => handleCategory(id)} className={`p-1 mx-5 mb-8 border-b-2    ${selectedCategory === id ? "text-fuchsia-400 border-fuchsia-400" : "hover:bg-slate-600/[0.1] border-black"}`}>{category}</h2>
+            <h2 onClick={() => handleCategory(id)} className={`p-1 mx-5 mb-8 border-b-2 cursor-pointer ${selectedCategory === id ? "text-fuchsia-400 border-fuchsia-400" : "hover:bg-slate-600/[0.1] border-black"}`}>{category}</h2>
           ))}
         </div>
         <div className="flex justify-center">
