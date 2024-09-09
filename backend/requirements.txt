@@ -1,7 +1,6 @@
 Django
 requests
 psycopg2-binary
-pillow
 pytz
 djangorestframework
 drf-yasg
