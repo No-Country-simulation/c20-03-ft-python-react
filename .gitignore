@@ -26,6 +26,8 @@ frontend/.next/
 # Ignorar archivos de lock
 backend/requirements.txt.lock
 frontend/package-lock.json
+backend/staticfiles
+backend/media
 
 # Ignorar carpetas específicas de editor/IDE
 .vscode/
@@ -44,3 +46,5 @@ frontend/package-lock.json
 # Ignorar archivos temporales
 *.tmp
 *.bak
+
+db/
