@@ -1,0 +1,273 @@
+[
+  {
+    "id": "1",
+    "category": "Mujer",
+    "name": "Remera estampada",
+    "description": "Remera de algodon con estampa de mujer.",
+    "price": 19.99,
+    "stock": 100,
+    "sizes": [
+      { "name": "XS", "inStock": true },
+      { "name": "S", "inStock": true },
+      { "name": "M", "inStock": true },
+      { "name": "L", "inStock": true },
+      { "name": "XL", "inStock": true },
+      { "name": "2XL", "inStock": true },
+      { "name": "3XL", "inStock": false },
+      { "name": "4XL", "inStock": false }
+    ],
+    "colors": [
+      { "name": "Rojo", "class": "bg-red-600", "selectedClass": "ring-red-600" },
+      { "name": "Azul", "class": "bg-blue-500", "selectedClass": "ring-blue-500" },
+      { "name": "Blanco", "class": "bg-white", "selectedClass": "ring-gray-400" },
+      { "name": "Negro", "class": "bg-black", "selectedClass": "ring-black" }
+    ],
+    "images": [
+      "https://acdn.mitiendanube.com/stores/001/053/068/products/mujer-afro-11-da492bf8650e3e52e116645715620104-640-0.jpg"
+    ],
+    "specifications": "Especificaciones detalladas del producto."
+  },
+  {
+    "id": "2",
+    "category": "Mujer",
+    "name": "Remera basica",
+    "description": "Remera lisa de algodon.",
+    "price": 99.99,
+    "stock": 25,
+    "sizes": [
+      { "name": "XS", "inStock": true },
+      { "name": "S", "inStock": true },
+      { "name": "M", "inStock": true },
+      { "name": "L", "inStock": true },
+      { "name": "XL", "inStock": true },
+      { "name": "2XL", "inStock": true },
+      { "name": "3XL", "inStock": true },
+      { "name": "4XL", "inStock": true }
+    ],
+    "colors": [
+      { "name": "Rojo", "class": "bg-red-500", "selectedClass": "ring-red-500" },
+      { "name": "Azul", "class": "bg-blue-500", "selectedClass": "ring-blue-500" },
+      { "name": "Blanco", "class": "bg-white", "selectedClass": "ring-gray-400" },
+      { "name": "Negro", "class": "bg-black", "selectedClass": "ring-black" }
+    ],
+    "images": [
+      "https://dcdn.mitiendanube.com/stores/001/313/879/products/remera-mujer-gris1-07f221c98b2b91c61c16466803790930-640-0.jpg"
+    ],
+    "specifications": "Especificaciones detalladas del producto."
+  },
+  {
+    "id": "3",
+    "category": "Mujer",
+    "name": "Remera top",
+    "description": "Remera top de algodon de colores lisos.",
+    "price": 49.99,
+    "stock": 75,
+    "sizes": [
+      { "name": "XS", "inStock": true },
+      { "name": "S", "inStock": true },
+      { "name": "M", "inStock": true },
+      { "name": "L", "inStock": true },
+      { "name": "XL", "inStock": true },
+      { "name": "2XL", "inStock": true },
+      { "name": "3XL", "inStock": true },
+      { "name": "4XL", "inStock": true }
+    ],
+    "colors": [
+      { "name": "Rojo", "class": "bg-red-500", "selectedClass": "ring-red-500" },
+      { "name": "Azul", "class": "bg-blue-500", "selectedClass": "ring-blue-500" },
+      { "name": "Blanco", "class": "bg-white", "selectedClass": "ring-gray-400" },
+      { "name": "Negro", "class": "bg-black", "selectedClass": "ring-black" }
+    ],
+    "images": [
+      "https://www.saladaapp.com.ar/wp-content/uploads/2024/01/remera-top-algodon-con-lycra-liso-de-mujer.webp"
+    ],
+    "specifications": "Especificaciones detalladas del producto."
+  },
+  {
+    "id": "4",
+    "category": "Mujer",
+    "name": "Remera musculosa top",
+    "description": "Remera musculosa top de algodon de colores lisos.",
+    "price": 49.99,
+    "stock": 75,
+    "sizes": [
+      { "name": "XS", "inStock": true },
+      { "name": "S", "inStock": true },
+      { "name": "M", "inStock": true },
+      { "name": "L", "inStock": true },
+      { "name": "XL", "inStock": true },
+      { "name": "2XL", "inStock": true },
+      { "name": "3XL", "inStock": true },
+      { "name": "4XL", "inStock": true }
+    ],
+    "colors": [
+      { "name": "Rojo", "class": "bg-red-500", "selectedClass": "ring-red-500" },
+      { "name": "Azul", "class": "bg-blue-500", "selectedClass": "ring-blue-500" },
+      { "name": "Blanco", "class": "bg-white", "selectedClass": "ring-gray-400" },
+      { "name": "Negro", "class": "bg-black", "selectedClass": "ring-black" }
+    ],
+    "images": [
+      "https://i.pinimg.com/originals/bb/fc/70/bbfc70448fc0bb0fd267e18e8aab2094.jpg"
+    ],
+    "specifications": "Especificaciones detalladas del producto."
+  },
+  {
+    "id": "5",
+    "category": "Mujer",
+    "name": "Remera musculosa hilo",
+    "description": "Remera muscula de hilo colores lisos",
+    "price": 49.99,
+    "stock": 75,
+    "sizes": [
+      { "name": "XS", "inStock": true },
+      { "name": "S", "inStock": true },
+      { "name": "M", "inStock": true },
+      { "name": "L", "inStock": true },
+      { "name": "XL", "inStock": true },
+      { "name": "2XL", "inStock": true },
+      { "name": "3XL", "inStock": true },
+      { "name": "4XL", "inStock": true }
+    ],
+    "colors": [
+      { "name": "Rojo", "class": "bg-red-500", "selectedClass": "ring-red-500" },
+      { "name": "Azul", "class": "bg-blue-500", "selectedClass": "ring-blue-500" },
+      { "name": "Blanco", "class": "bg-white", "selectedClass": "ring-gray-400" },
+      { "name": "Negro", "class": "bg-black", "selectedClass": "ring-black" }
+    ],
+    "images": [
+      "https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgDB1WQDbjm_tbfAwPpFFGUTQeAXw6JiFvNfMjRWQyF2HFQ6DoIOCN227A3v2Crgapj9ZuTrJmRiUB7wW-WWNHUEtAcV5IuNWPF4__s-lzgEEaysyGY-lMkdYI6l4WCi0yMK4hv7ysFaHI/s1080/tops+tejidos+ropa+de+mujer+moda+2021.jpg"
+    ],
+    "specifications": "Especificaciones detalladas del producto."
+  },
+  {
+    "id": "6",
+    "category": "Mujer",
+    "name": "Pantalon eco cuero",
+    "description": "Pantalon al cuerpo de eco cuero",
+    "price": 49.99,
+    "stock": 75,
+    "sizes": [
+      { "name": "XS", "inStock": true },
+      { "name": "S", "inStock": true },
+      { "name": "M", "inStock": true },
+      { "name": "L", "inStock": true },
+      { "name": "XL", "inStock": true },
+      { "name": "2XL", "inStock": true },
+      { "name": "3XL", "inStock": true },
+      { "name": "4XL", "inStock": true }
+    ],
+    "colors": [
+      { "name": "Blanco", "class": "bg-white", "selectedClass": "ring-gray-400" },
+      { "name": "Negro", "class": "bg-black", "selectedClass": "ring-black" }
+    ],
+    "images": [
+      "https://http2.mlstatic.com/D_NQ_NP_727595-MLA51162440012_082022-O.webp"
+    ],
+    "specifications": "Especificaciones detalladas del producto."
+  },
+  {
+    "id": "7",
+    "category": "Mujer",
+    "name": "Pantalon de jean",
+    "description": "Pantalon de jean clasico",
+    "price": 49.99,
+    "stock": 75,
+    "sizes": [
+      { "name": "XS", "inStock": true },
+      { "name": "S", "inStock": true },
+      { "name": "M", "inStock": true },
+      { "name": "L", "inStock": true },
+      { "name": "XL", "inStock": true },
+      { "name": "2XL", "inStock": true },
+      { "name": "3XL", "inStock": true },
+      { "name": "4XL", "inStock": true }
+    ],
+    "colors": [
+      { "name": "Azul", "class": "bg-blue-500", "selectedClass": "ring-blue-500" },
+      { "name": "Negro", "class": "bg-black", "selectedClass": "ring-black" }
+    ],
+    "images": [
+      "https://i.pinimg.com/736x/b3/a2/17/b3a217f4b5da567a42c4d177b1a83e7b.jpg"
+    ],
+    "specifications": "Especificaciones detalladas del producto."
+  },
+  {
+    "id": "8",
+    "category": "Mujer",
+    "name": "Pantalon de jogging",
+    "description": "Pantalon de jogging negro liso",
+    "price": 49.99,
+    "stock": 75,
+    "sizes": [
+      { "name": "XS", "inStock": true },
+      { "name": "S", "inStock": true },
+      { "name": "M", "inStock": true },
+      { "name": "L", "inStock": true },
+      { "name": "XL", "inStock": true },
+      { "name": "2XL", "inStock": true },
+      { "name": "3XL", "inStock": true },
+      { "name": "4XL", "inStock": true }
+    ],
+    "colors": [
+      { "name": "Negro", "class": "bg-black", "selectedClass": "ring-black" }
+    ],
+    "images": [
+      "https://d3ugyf2ht6aenh.cloudfront.net/stores/001/212/847/products/jogging-mujer1-6d5d8b12a7a4bb23d716142963967285-1024-1024.webp"
+    ],
+    "specifications": "Especificaciones detalladas del producto."
+  },
+  {
+    "id": "9",
+    "category": "Mujer",
+    "name": "Pantalon short",
+    "description": "Short de jean clasico",
+    "price": 49.99,
+    "stock": 75,
+    "sizes": [
+      { "name": "XS", "inStock": true },
+      { "name": "S", "inStock": true },
+      { "name": "M", "inStock": true },
+      { "name": "L", "inStock": true },
+      { "name": "XL", "inStock": true },
+      { "name": "2XL", "inStock": true },
+      { "name": "3XL", "inStock": true },
+      { "name": "4XL", "inStock": true }
+    ],
+    "colors": [
+      { "name": "Azul", "class": "bg-blue-500", "selectedClass": "ring-blue-500" },
+      { "name": "Negro", "class": "bg-black", "selectedClass": "ring-black" }
+    ],
+    "images": [
+      "https://i.pinimg.com/564x/17/2a/54/172a543aff6fbf6adcaa2e08d2c81de5.jpg"
+    ],
+    "specifications": "Especificaciones detalladas del producto."
+  },
+  {
+    "id": "10",
+    "category": "Mujer",
+    "name": "Pantalon short con roturas",
+    "description": "Pantalon short con roturas",
+    "price": 49.99,
+    "stock": 75,
+    "sizes": [
+      { "name": "XS", "inStock": true },
+      { "name": "S", "inStock": true },
+      { "name": "M", "inStock": true },
+      { "name": "L", "inStock": true },
+      { "name": "XL", "inStock": true },
+      { "name": "2XL", "inStock": true },
+      { "name": "3XL", "inStock": true },
+      { "name": "4XL", "inStock": true }
+    ],
+    "colors": [
+      { "name": "Azul", "class": "bg-blue-700", "selectedClass": "ring-blue-700" },
+      { "name": "Gris", "class": "bg-gray-500", "selectedClass": "ring-gray-500" },
+      { "name": "Negro", "class": "bg-black", "selectedClass": "ring-black" }
+    ],
+    "images": [
+      "https://oechsle.vteximg.com.br/arquivos/ids/14241045-1000-1000/2329787.jpg?v=638155715668170000"
+    ],
+    "specifications": "Especificaciones detalladas del producto."
+  }
+  ]
+
