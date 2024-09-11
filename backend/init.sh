@@ -19,4 +19,7 @@ exec gunicorn --bind 0.0.0.0:8000 project.wsgi:application \
     --timeout ${GUNICORN_TIMEOUT:-120} \
     --keep-alive ${GUNICORN_KEEP_ALIVE:-5} \
     --max-requests ${GUNICORN_MAX_REQUESTS:-1000} \
-    --max-requests-jitter ${GUNICORN_MAX_REQUESTS_JITTER:-50}
+    --max-requests-jitter ${GUNICORN_MAX_REQUESTS_JITTER:-50} \
+    --access-logfile '-' \
+    --error-logfile '-' \
+    --log-level 'info'
