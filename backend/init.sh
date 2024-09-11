@@ -29,4 +29,4 @@ exec gunicorn --bind 0.0.0.0:8000 project.wsgi:application \
     --max-requests-jitter ${GUNICORN_MAX_REQUESTS_JITTER:-50} \
     --access-logfile '-' \
     --error-logfile '-' \
-    --log-level 'info'
+    --log-level 'debug'
