@@ -89,6 +89,7 @@ SWAGGER_SETTINGS = {
             'description': 'Enter your JWT token in the format **Bearer <token>**',
         }
     },
+    'USE_SESSION_AUTH': False,  # Deshabilitar la autenticación de sesión en Swagger
     'DEFAULT_AUTO_SCHEMA_CLASS': 'drf_yasg.inspectors.SwaggerAutoSchema',
     'SECURITY': [
         {
