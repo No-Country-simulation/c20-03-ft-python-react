@@ -6,5 +6,5 @@ djangorestframework
 drf-yasg
 djangorestframework-simplejwt
 gunicorn
-setuptools
 django-cors-headers
+setuptools
