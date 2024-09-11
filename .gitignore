@@ -13,6 +13,8 @@ Thumbs.db
 postgres_data/
 home/
 db/postgres_data/
+db/
+backend/postgresql_app/migrations/
 
 # Ignorar archivos de construcción de Python
 __pycache__/
