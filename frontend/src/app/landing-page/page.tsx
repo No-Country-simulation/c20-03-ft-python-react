@@ -7,11 +7,11 @@ import { testProductData } from "./lib/utils";
 export default function LandingPage() {
 
   const testFlashSaleData = testProductData(7); //se generan 7 items de prueba
-  const testMasVendidosData = testProductData(4);
+  const testMasVendidosData = testProductData(2);
   return (
     <div className="min-h-screen p-24">
       <div className="mb-32">
-        <FlashSale productData={testFlashSaleData} />
+        <FlashSale productData={testFlashSaleData} /> 
       </div>
       <div className="mb-32">
         <LandingPageCategories />

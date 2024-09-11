@@ -15,7 +15,7 @@ export default function ProductCard({
     width?: number | string
 }){
   return (
-    <Card sx={{ width: `${width ? width : 384}`, minWidth: 384, mx: 1, borderRadius: "16px"} } variant="outlined">
+    <Card sx={{ width: `${width ? width : 384}`, minWidth: 384, maxWidth: 600, mx: 1, borderRadius: "16px"} } variant="outlined">
       <CardMedia
         sx={{ height: 512, bgcolor: 'text.disabled'}}
       />
