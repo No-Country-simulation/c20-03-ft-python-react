@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import Navbar from '../components/Navbar';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import Review from '../components/Reviews';
+import ReviewsList from '../components/Reviews'; 
 import Footer from './Footer';
 
 interface Product {
@@ -20,31 +20,14 @@ interface Product {
   specifications: string;
 }
 
-interface Review {
-  rating: number;
-  text: string;
-  name: string;
-}
-
 interface ProductDetailProps {
   product: Product;
-}
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(' ');
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
   const [selectedSize, setSelectedSize] = useState(product.sizes[0].name);
   const [selectedColor, setSelectedColor] = useState(product.colors[0].name);
   const [isFavorite, setIsFavorite] = useState(false);
-
-  const reviews: Review[] = [
-    { rating: 5, text: '¡Excelente producto! La calidad es increíble y el color es justo como en la imagen.', name: 'Ana' },
-    { rating: 4, text: 'Muy bueno, pero el tamaño no era exactamente como esperaba.', name: 'Luis' },
-    { rating: 3, text: 'El producto está bien, pero el envío tardó un poco más de lo prometido.', name: 'Marta' },
-    { rating: 5, text: 'Perfecto. El mejor producto que he comprado en mucho tiempo.', name: 'Carlos' },
-  ];
 
   const handleFavoriteClick = () => {
     setIsFavorite(!isFavorite);
@@ -108,13 +91,11 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
                   key={size.name}
                   onClick={() => setSelectedSize(size.name)}
                   disabled={!size.inStock}
-                  className={classNames(
-                    size.inStock
-                      ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
-                      : 'cursor-not-allowed bg-gray-50 text-gray-200',
-                    'group relative flex items-center justify-center rounded-md border border-black px-8 py-3 text-lg font-medium uppercase focus:outline-none',
-                    selectedSize === size.name ? 'ring-2 ring-indigo-500' : ''
-                  )}
+                  className={`${size.inStock
+                    ? 'cursor-pointer bg-white text-gray-900 shadow-sm'
+                    : 'cursor-not-allowed bg-gray-50 text-gray-200'} 
+                    group relative flex items-center justify-center rounded-md border border-black px-8 py-3 text-lg font-medium uppercase focus:outline-none 
+                    ${selectedSize === size.name ? 'ring-2 ring-indigo-500' : ''}`}
                 >
                   {size.name}
                   {size.inStock ? (
@@ -151,20 +132,7 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product }) => {
       <br />
       <h2 className="text-2xl text-black font-bold mb-2 flex md:flex-row md:w-1/3 p-4 relative flex items-center justify-center text-center">Reseñas</h2>
       <div className="p-4 bg-gray-100 rounded-lg shadow-md flex flex-col md:flex-row relative flex items-center justify-center">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {reviews.length > 0 ? (
-            reviews.map((review, index) => (
-              <Review
-                key={index}
-                name={review.name}
-                rating={review.rating}
-                text={review.text}
-              />
-            ))
-          ) : (
-            <p className="text-gray-500">No hay reseñas para este producto.</p>
-          )}
-        </div>
+        <ReviewsList />
       </div>
       <Footer />
     </div>

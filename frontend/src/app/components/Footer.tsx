@@ -13,19 +13,19 @@ const Footer: React.FC = () => {
         <div className="flex flex-col md:mb-0">
           <h4 className="text-lg font-bold mb-4">Síguenos en:</h4>
           <div className="flex space-x-6">
-            <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.facebook.com" target="_blank" >
               <FacebookIcon className="hover:text-blue-500" style={{ fontSize: 30 }} />
             </a>
-            <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.instagram.com" target="_blank" >
               <InstagramIcon className="hover:text-pink-500" style={{ fontSize: 30 }} />
             </a>
-            <a href="https://github.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://github.com" target="_blank" >
               <GitHubIcon className="hover:text-gray-500" style={{ fontSize: 30 }} />
             </a>
-            <a href="https://www.youtube.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://www.youtube.com" target="_blank" >
               <YouTubeIcon className="hover:text-red-500" style={{ fontSize: 30 }} />
             </a>
-            <a href="https://twitter.com" target="_blank" rel="noopener noreferrer">
+            <a href="https://twitter.com" target="_blank" >
               <TwitterIcon className="hover:text-blue-400" style={{ fontSize: 30 }} />
             </a>
           </div>

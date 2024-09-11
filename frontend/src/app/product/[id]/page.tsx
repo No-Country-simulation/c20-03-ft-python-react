@@ -1,6 +1,7 @@
-// src/app/product/[id]/page.tsx
-import  ProductDetail  from '../../components/ProductDetail';
-import products from '../../data/products.json'; // Ajusta la ruta según la ubicación del archivo
+import ProductDetail from '../../components/ProductDetail';
+import axios from 'axios';
+
+const BASE_URL = 'https://back-dev.avillalba.com.ar/api';
 
 interface Product {
   id: string;
@@ -15,12 +16,19 @@ interface Product {
   specifications: string;
 }
 
-const getProductData = (id: string): Product | null => {
-  return products.find((product: Product) => product.id === id) || null;
+const getProductData = async (id: string): Promise<Product | null> => {
+  try {
+    const response = await axios.get(`${BASE_URL}/products/${id}`);
+    const product = response.data;
+    return product;
+  } catch (error) {
+    console.error('Error fetching product data', error);
+    return null;
+  }
 };
 
 const ProductPage = async ({ params }: { params: { id: string } }) => {
-  const product = getProductData(params.id);
+  const product = await getProductData(params.id);  
 
   if (!product) {
     return <p>Producto no encontrado</p>;
