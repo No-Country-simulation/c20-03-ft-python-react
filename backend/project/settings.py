@@ -113,10 +113,10 @@ CORS_ALLOWED_ORIGINS = [
 CORS_ALLOW_ALL_ORIGINS = False  # Set this to True if you want to allow all origins, but it's not recommended
 
 # CSRF trusted origins
-#CSRF_TRUSTED_ORIGINS = [
-#    origin.strip() for origin in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')
-#    if origin.strip()
-#]
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip() for origin in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')
+    if origin.strip()
+]
 
 
 MIDDLEWARE = [
