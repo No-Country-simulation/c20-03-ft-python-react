@@ -48,3 +48,5 @@ backend/media
 # Ignorar archivos temporales
 *.tmp
 *.bak
+
+db/
