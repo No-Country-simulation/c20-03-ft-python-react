@@ -1,19 +1,16 @@
-# backend/postgresql_app/views.py
-
 from django.core.exceptions import ValidationError
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Group
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
-from .serializers import UserSerializer, UserListSerializer
+from .serializers import UserSerializer, UserListSerializer, ProductSerializer
 from .models import Product
-from .serializers import ProductSerializer
-from django.views.decorators.csrf import csrf_exempt
+from django.views.decorators.csrf import csrf_protect  # Importar csrf_protect desde Django
 
-
+# Vista para listar productos
 @swagger_auto_schema(method='get', responses={200: ProductSerializer(many=True)})
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -22,17 +19,22 @@ def list_products(request):
     serializer = ProductSerializer(products, many=True)
     return Response(serializer.data, status=status.HTTP_200_OK)
 
+# Vista para crear un producto
 @swagger_auto_schema(method='post', request_body=ProductSerializer, responses={201: ProductSerializer})
-@csrf_exempt  # Deshabilitar CSRF en esta vista
+@csrf_protect
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_product(request):
+    if not request.user.groups.filter(name='admin').exists():
+        return Response({'error': 'No tienes permisos para crear productos'}, status=status.HTTP_403_FORBIDDEN)
+    
     serializer = ProductSerializer(data=request.data)
     if serializer.is_valid():
         serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+# Vista para obtener, actualizar o eliminar un producto
 @swagger_auto_schema(
     method='get', 
     responses={200: ProductSerializer}
@@ -46,7 +48,7 @@ def create_product(request):
     method='delete', 
     responses={204: 'No Content'}
 )
-@csrf_exempt  # Deshabilitar CSRF en esta vista
+@csrf_protect
 @api_view(['GET', 'PUT', 'DELETE'])
 @permission_classes([IsAuthenticated])
 def product_detail(request, pk):
@@ -59,17 +61,24 @@ def product_detail(request, pk):
         serializer = ProductSerializer(product)
         return Response(serializer.data)
 
-    elif request.method == 'PUT':
+    if request.method == 'PUT':
+        if not request.user.groups.filter(name='admin').exists():
+            return Response({'error': 'No tienes permisos para actualizar productos'}, status=status.HTTP_403_FORBIDDEN)
+        
         serializer = ProductSerializer(product, data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-    elif request.method == 'DELETE':
+    if request.method == 'DELETE':
+        if not request.user.groups.filter(name='admin').exists():
+            return Response({'error': 'No tienes permisos para eliminar productos'}, status=status.HTTP_403_FORBIDDEN)
+        
         product.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+# Vista para listar usuarios
 @swagger_auto_schema(method='get', responses={200: UserListSerializer(many=True)})
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
@@ -81,11 +90,12 @@ def list_users(request):
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@csrf_exempt
+# Vista para registrar un usuario básico
+@csrf_protect
 @swagger_auto_schema(method='post', request_body=UserSerializer, responses={201: UserSerializer})
 @api_view(['POST'])
-@permission_classes([IsAuthenticated])
-def register(request):
+@permission_classes([AllowAny])  # Permitir acceso a cualquiera
+def register_user(request):
     try:
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
@@ -96,7 +106,12 @@ def register(request):
             if User.objects.filter(email=email).exists():
                 return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
 
-            User.objects.create_user(username=username, password=password, email=email)
+            user = User.objects.create_user(username=username, password=password, email=email)
+            
+            # Asignar al grupo 'user'
+            group = Group.objects.get(name='user')
+            user.groups.add(group)
+            
             return Response({'message': 'User created successfully'}, status=status.HTTP_201_CREATED)
         else:
             return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
@@ -105,7 +120,40 @@ def register(request):
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-@csrf_exempt
+# Vista para registrar un usuario con rol de admin
+@csrf_protect
+@swagger_auto_schema(method='post', request_body=UserSerializer, responses={201: UserSerializer})
+@api_view(['POST'])
+@permission_classes([IsAuthenticated])
+def register_admin(request):
+    try:
+        if not request.user.is_superuser:
+            return Response({'error': 'No tienes permisos para crear administradores'}, status=status.HTTP_403_FORBIDDEN)
+        
+        serializer = UserSerializer(data=request.data)
+        if serializer.is_valid():
+            username = serializer.validated_data['username']
+            password = serializer.validated_data['password']
+            email = serializer.validated_data['email']
+
+            if User.objects.filter(email=email).exists():
+                return Response({'error': 'Email already exists'}, status=status.HTTP_400_BAD_REQUEST)
+
+            user = User.objects.create_user(username=username, password=password, email=email)
+            
+            # Asignar al grupo 'admin'
+            group = Group.objects.get(name='admin')
+            user.groups.add(group)
+            
+            return Response({'message': 'Admin user created successfully'}, status=status.HTTP_201_CREATED)
+        else:
+            return Response({'error': serializer.errors}, status=status.HTTP_400_BAD_REQUEST)
+    except ValidationError as e:
+        return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+@csrf_protect
 @swagger_auto_schema(method='post', request_body=TokenObtainPairSerializer, responses={200: TokenObtainPairSerializer})
 @api_view(['POST'])
 def token_obtain_pair(request):
@@ -114,7 +162,7 @@ def token_obtain_pair(request):
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-@csrf_exempt
+@csrf_protect
 @swagger_auto_schema(method='post', request_body=TokenRefreshSerializer, responses={200: TokenRefreshSerializer})
 @api_view(['POST'])
 def token_refresh(request):

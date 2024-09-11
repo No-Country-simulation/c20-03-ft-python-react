@@ -75,9 +75,13 @@ LOGGING = {
     },
 }
 
-# Cookies security settings
-SESSION_COOKIE_SECURE = os.environ.get('SESSION_COOKIE_SECURE', 'False') == 'True'
-CSRF_COOKIE_SECURE = os.environ.get('CSRF_COOKIE_SECURE', 'False') == 'True'
+# Security settings
+SECURE_BROWSER_XSS_FILTER = True
+X_FRAME_OPTIONS = 'DENY'
+SECURE_CONTENT_TYPE_NOSNIFF = True
+CSRF_COOKIE_SECURE = not DEBUG  # Usar solo HTTPS para CSRF cookies en producción
+SESSION_COOKIE_SECURE = not DEBUG  # Usar solo HTTPS para cookies de sesión en producción
+SECURE_SSL_REDIRECT = not DEBUG  # Redirigir HTTP a HTTPS en producción
 
 # Swagger settings
 SWAGGER_SETTINGS = {
@@ -100,12 +104,17 @@ SWAGGER_SETTINGS = {
 
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
+# CSRF trusted origins
+CSRF_TRUSTED_ORIGINS = [
+    origin.strip() for origin in os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')
+    if origin.strip()
+]
+
 # CORS settings
 CORS_ALLOWED_ORIGINS = [
     origin.strip() for origin in os.environ.get('CORS_ALLOWED_ORIGINS', '').split(',')
     if origin.strip()
 ]
-
 CORS_ALLOW_ALL_ORIGINS = False  # Set this to True if you want to allow all origins, but it's not recommended
 
 MIDDLEWARE = [
