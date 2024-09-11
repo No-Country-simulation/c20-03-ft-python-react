@@ -12,9 +12,3 @@ urlpatterns = [
     path('v1/products/add/', views.create_product, name='create_product'),
     path('v1/products/<int:pk>/', views.product_detail, name='product_detail'),
 ]
-
-# python manage.py shell
-# from django.contrib.auth.models import Group
-# Group.objects.get_or_create(name='admin')
-# Group.objects.get_or_create(name='user')
-# exit()

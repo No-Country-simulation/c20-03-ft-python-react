@@ -9,6 +9,13 @@ python manage.py makemigrations
 python manage.py migrate
 python manage.py collectstatic --noinput
 
+# Crear grupos 'admin' y 'user' si no existen
+python manage.py shell -c "
+from django.contrib.auth.models import Group;
+Group.objects.get_or_create(name='admin');
+Group.objects.get_or_create(name='user');
+"
+
 # Iniciar Nginx en segundo plano
 nginx &
 
