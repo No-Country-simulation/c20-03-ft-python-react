@@ -31,7 +31,6 @@ const ReviewsList: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
-  
   const getReviews = async () => {
     try {
       const response = await axios.get(`${URL_DE_RESEÑAS}/reviews`);
@@ -57,7 +56,10 @@ const ReviewsList: React.FC = () => {
           <Review key={index} name={review.name} rating={review.rating} text={review.text} />
         ))
       ) : (
-        <p className="text-gray-500">No hay reseñas para este producto.</p>
+        
+        <div className="flex justify-center items-center">
+          <Review name="N/A" rating={0} text="No hay reseñas disponibles" />
+        </div>
       )}
     </div>
   );

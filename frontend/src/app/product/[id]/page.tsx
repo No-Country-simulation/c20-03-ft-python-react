@@ -28,12 +28,9 @@ const getProductData = async (id: string): Promise<Product | null> => {
 };
 
 const ProductPage = async ({ params }: { params: { id: string } }) => {
-  const product = await getProductData(params.id);  
+  const product = await getProductData(params.id);
 
-  if (!product) {
-    return <p>Producto no encontrado</p>;
-  }
-
+  
   return (
     <div>
       <ProductDetail product={product} />
