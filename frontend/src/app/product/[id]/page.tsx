@@ -1,7 +1,7 @@
 import ProductDetail from '../../components/ProductDetail';
 import axios from 'axios';
 
-const BASE_URL = 'https://back-dev.avillalba.com.ar/api';
+const BASE_URL = 'https://back-dev.avillalba.com.ar/';
 
 interface Product {
   id: string;
