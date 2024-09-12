@@ -23,6 +23,7 @@ services:
     hostname: django-back
     environment:
       DATABASE_HOST: db-back
+      SWAGGER_BASE_URL: "http://localhost:8000"
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USER: ${DATABASE_USER}
@@ -46,3 +47,4 @@ services:
       - "8000:80"
     depends_on:
       - db-back
+

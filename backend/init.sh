@@ -1,8 +1,36 @@
 #!/bin/bash
 set -euo pipefail
 
+# Imprimir información de conexión de la base de datos
+echo "Conectando a la base de datos:"
+echo "  HOST: ${DATABASE_HOST}"
+echo "  PUERTO: ${DATABASE_PORT}"
+echo "  NOMBRE: ${DATABASE_NAME}"
+echo "  USUARIO: ${DATABASE_USER}"
+
 # Instalar dependencias de Python (con caché)
 pip install -r requirements.txt
+
+# Verificar la conexión a la base de datos
+echo "Verificando conexión a la base de datos..."
+
+DB_CHECK=$(python manage.py shell -c "
+from django.db import connections;
+try:
+    connections['default'].cursor()
+    print('Conexión a la base de datos exitosa.')
+except Exception as e:
+    print(f'Error de conexión a la base de datos: {e}')
+")
+
+echo "$DB_CHECK"
+
+if [[ "$DB_CHECK" == *"Error de conexión a la base de datos"* ]]; then
+  echo "Fallo al conectar con la base de datos. Abortando..."
+  exit 1
+fi
+
+echo "Conexión a la base de datos verificada correctamente."
 
 # Realizar migraciones y recopilar archivos estáticos
 python manage.py makemigrations
@@ -30,3 +58,4 @@ exec gunicorn --bind 0.0.0.0:8000 project.wsgi:application \
     --access-logfile '-' \
     --error-logfile '-' \
     --log-level 'debug'
+

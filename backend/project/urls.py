@@ -5,7 +5,7 @@ from drf_yasg import openapi
 from drf_yasg.generators import OpenAPISchemaGenerator
 from rest_framework import permissions
 from django.conf import settings
-
+import os
 
 # Define una clase generadora de esquema personalizada para permitir ambos esquemas
 class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
@@ -15,8 +15,8 @@ class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
         schema.schemes = ["http", "https"]
         return schema
 
-# Condicional para la URL de Swagger según el modo de depuración
-swagger_url = 'http://localhost:8000/' if settings.DEBUG else None
+# Define la URL base del Swagger según el entorno
+swagger_base_url = os.environ.get('SWAGGER_BASE_URL', 'http://localhost:8000')
 
 # Define el esquema con el esquema y el host especificados
 schema_view = get_schema_view(
@@ -31,7 +31,7 @@ schema_view = get_schema_view(
     public=True,
     permission_classes=[permissions.AllowAny],
     generator_class=BothHttpAndHttpsSchemaGenerator,  # Usa la clase generadora personalizada
-    url=swagger_url,  # Configurar URL según el modo de depuración
+    url=swagger_base_url,  # Configurar URL basado en el entorno
 )
 
 urlpatterns = [
@@ -46,3 +46,4 @@ urlpatterns = [
         cache_timeout=0
     ), name='schema-redoc'),
 ]
+

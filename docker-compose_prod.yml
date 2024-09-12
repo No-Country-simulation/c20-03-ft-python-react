@@ -19,6 +19,7 @@ services:
     hostname: django-back-prod
     environment:
       DATABASE_HOST: db-back-prod
+      SWAGGER_BASE_URL: "https://back.avillalba.com.ar"
       DATABASE_PORT: ${DATABASE_PORT}
       DATABASE_NAME: ${DATABASE_NAME}
       DATABASE_USER: ${DATABASE_USER}
@@ -53,4 +54,5 @@ services:
 #      - ./frontend:/app
     ports:
       - "3030:3000"
+
 
