@@ -1,6 +1,7 @@
 import FlashSale from "./landing-page/ui/flash-sale/flash-sale";
 import LandingPageCategories from "./landing-page/ui/categorias/categories";
 import MasVendidos from "./landing-page/ui/mas-vendidos/mas-vendidos";
+import Navbar from './components/Navbar';
 
 import { testProductData } from "./landing-page/lib/utils";
 
@@ -12,8 +13,7 @@ const HomePage = () => {
   
   return (
     <div className="min-h-screen p-24">
-      {/* Incluir el Navbar */}
-
+      <Navbar />
       {/* Contenido de la página */}
       <div className="container mx-auto p-8">
         <h1 className="text-4xl font-bold text-center mb-8">Bienvenido a Nuestro E-commerce</h1>
