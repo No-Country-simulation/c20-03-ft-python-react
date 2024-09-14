@@ -7,20 +7,8 @@ from rest_framework.response import Response
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, TokenRefreshSerializer
 from rest_framework.exceptions import NotAuthenticated, PermissionDenied
-from .serializers import UserSerializer, UserListSerializer, ProductSerializer
+from .serializers import UserSerializer, UserListSerializer, ProductSerializer, ProductVariantSerializer
 from .models import Product
-
-# Vista para listar productos
-@swagger_auto_schema(method='get', responses={200: ProductSerializer(many=True)})
-@api_view(['GET'])
-@permission_classes([IsAuthenticated])
-def list_products(request):
-    try:
-        products = Product.objects.all()
-        serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data, status=status.HTTP_200_OK)
-    except Exception as e:
-        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # Vista para crear un producto
 @swagger_auto_schema(method='post', request_body=ProductSerializer, responses={201: ProductSerializer})
@@ -31,15 +19,53 @@ def create_product(request):
         if not request.user.groups.filter(name='admin').exists():
             raise PermissionDenied('No tienes permisos para crear productos.')
         
-        serializer = ProductSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        # Asegúrate de que todos los campos necesarios estén presentes y sean válidos
+        product_serializer = ProductSerializer(data=request.data)
+        product_serializer.is_valid(raise_exception=True)  # Lanzará un error si los datos no son válidos
+        
+        # Guarda el producto
+        product = product_serializer.save()
+        
+        # Crea variantes para el producto si existen en la solicitud
+        variants_data = request.data.get('variants', [])
+        for variant_data in variants_data:
+            variant_serializer = ProductVariantSerializer(data=variant_data)
+            variant_serializer.is_valid(raise_exception=True)  # Verifica cada variante
+            variant_serializer.save(product=product)  # Asocia cada variante al producto creado
+
+        return Response(product_serializer.data, status=status.HTTP_201_CREATED)
+    
     except PermissionDenied as e:
         return Response({'error': str(e)}, status=status.HTTP_403_FORBIDDEN)
+    except ValidationError as e:
+        return Response({'error': e.message_dict}, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+# Nueva vista para obtener el stock de una variante de producto específica
+@swagger_auto_schema(method='get', responses={200: ProductVariantSerializer})
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def product_variant_detail(request, product_id, size):
+    try:
+        # Obtiene el producto por ID
+        product = Product.objects.get(pk=product_id)
+        
+        # Filtra las variantes del producto por el tamaño especificado
+        variant = product.variants.filter(size=size).first()
+
+        if not variant:
+            return Response({'error': 'No se encontró una variante con el tamaño especificado.'}, status=status.HTTP_404_NOT_FOUND)
+        
+        # Serializa la variante encontrada
+        serializer = ProductVariantSerializer(variant)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except Product.DoesNotExist:
+        return Response({'error': 'Producto no encontrado'}, status=status.HTTP_404_NOT_FOUND)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 # Vista para obtener, actualizar o eliminar un producto
 @swagger_auto_schema(
@@ -94,22 +120,18 @@ def product_detail(request, pk):
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
-# Vista para listar usuarios
-@swagger_auto_schema(method='get', responses={200: UserListSerializer(many=True)})
+# Vista para listar productos
+@swagger_auto_schema(method='get', responses={200: ProductSerializer(many=True)})
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
-def list_users(request):
+def list_products(request):
     try:
-        if not request.user.is_superuser:
-            raise PermissionDenied('No tienes permisos para ver la lista de usuarios.')
-        
-        users = User.objects.filter(is_superuser=False).exclude(groups__name='admin')
-        serializer = UserListSerializer(users, many=True)
-        return Response({'users': serializer.data}, status=status.HTTP_200_OK)
-    except PermissionDenied as e:
-        return Response({'error': str(e)}, status=status.HTTP_403_FORBIDDEN)
+        products = Product.objects.prefetch_related('variants').all()  # Prefetch de variantes
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data, status=status.HTTP_200_OK)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 # Vista para registrar un usuario básico
 @swagger_auto_schema(method='post', request_body=UserSerializer, responses={201: UserSerializer})
@@ -139,6 +161,24 @@ def register_user(request):
         return Response({'error': str(e)}, status=status.HTTP_400_BAD_REQUEST)
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+# Vista para listar usuarios
+@swagger_auto_schema(method='get', responses={200: UserListSerializer(many=True)})
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def list_users(request):
+    try:
+        if not request.user.is_superuser:
+            raise PermissionDenied('No tienes permisos para ver la lista de usuarios.')
+        
+        users = User.objects.filter(is_superuser=False).exclude(groups__name='admin')
+        serializer = UserListSerializer(users, many=True)
+        return Response({'users': serializer.data}, status=status.HTTP_200_OK)
+    except PermissionDenied as e:
+        return Response({'error': str(e)}, status=status.HTTP_403_FORBIDDEN)
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 # Vista para registrar un usuario con rol de admin
 @swagger_auto_schema(method='post', request_body=UserSerializer, responses={201: UserSerializer})

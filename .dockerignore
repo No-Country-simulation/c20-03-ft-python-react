@@ -37,4 +37,3 @@ deploy.sh_disable
 docker-compose.yml
 *_disable
 db/
-backend/postgresql_app/migrations/

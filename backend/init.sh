@@ -34,8 +34,7 @@ echo "Conexión a la base de datos verificada correctamente."
 
 # Realizar migraciones y recopilar archivos estáticos
 python manage.py makemigrations
-python manage.py migrate
-python manage.py collectstatic --noinput
+python manage.py migrate --noinput
 
 # Crear grupos 'admin' y 'user' si no existen
 python manage.py shell -c "

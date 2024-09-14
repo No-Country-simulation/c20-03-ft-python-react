@@ -11,4 +11,5 @@ urlpatterns = [
     path('v1/products/', views.list_products, name='list_products'),
     path('v1/products/add/', views.create_product, name='create_product'),
     path('v1/products/<int:pk>/', views.product_detail, name='product_detail'),
+    path('v1/products/<int:product_id>/variants/<str:size>/', views.product_variant_detail, name='product_variant_detail'),  # Nueva ruta
 ]
