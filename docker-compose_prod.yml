@@ -14,7 +14,7 @@ services:
       - ./db/postgres_data_prod:/var/lib/postgresql/data
 
   django-back-prod:
-    image: backend-main:main-97fcbed
+    image: backend-main:main-2aec28f
     container_name: django-back-prod
     hostname: django-back-prod
     environment:
@@ -47,7 +47,7 @@ services:
       - db-back-prod
 
   nextjs-front-prod:
-    image: frontend-main:main-97fcbed
+    image: frontend-main:main-2aec28f
     container_name: nextjs-front-prod
     hostname: nextjs-front-prod
 #    volumes:

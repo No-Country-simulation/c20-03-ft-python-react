@@ -33,6 +33,7 @@ fi
 echo "Conexión a la base de datos verificada correctamente."
 
 # Generar y aplicar migraciones
+python manage.py collectstatic --noinput
 python manage.py makemigrations postgresql_app
 python manage.py migrate --noinput
 
