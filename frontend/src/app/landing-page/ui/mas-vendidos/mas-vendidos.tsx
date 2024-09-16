@@ -13,7 +13,7 @@ export default function MasVendidos ({productData}:{productData: flashSaleDataIn
             <div className="flex justify-center mb-12 text-6xl font-bold">
             <p>Mas vendidos</p>
             </div>
-            <div className={`grid gap-2 grid-cols-${filteredProductData.length.toString()}`}>
+            <div className={`grid gap-2 grid-cols-4`}>
                 {filteredProductData.map((item) => (
                     <ProductCard productData={item}/>
                 ))}

@@ -9,7 +9,7 @@ import { testProductData } from "./landing-page/lib/utils";
 const HomePage = () => {
 
   const testFlashSaleData = testProductData(7); //se generan 7 items de prueba
-  const testMasVendidosData = testProductData(2);
+  const testMasVendidosData = testProductData(4);
   
   return (
     <div className="min-h-screen p-24">
