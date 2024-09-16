@@ -32,24 +32,10 @@ fi
 
 echo "Conexión a la base de datos verificada correctamente."
 
-# Limpiar todas las entradas de migraciones en la base de datos para todas las aplicaciones
-echo "Eliminando entradas de migraciones antiguas para todas las aplicaciones..."
-python manage.py dbshell <<EOF
-DELETE FROM django_migrations WHERE app != 'auth' AND app != 'contenttypes' AND app != 'sessions' AND app != 'admin';
-EOF
-
-# Eliminar las tablas de las aplicaciones para evitar conflictos de "relation already exists"
-echo "Eliminando tablas de aplicaciones de usuario para evitar conflictos..."
-python manage.py shell -c "
-from django.db import connection
-with connection.cursor() as cursor:
-    cursor.execute('DROP SCHEMA public CASCADE; CREATE SCHEMA public;')
-"
-
 # Generar y aplicar migraciones
 python manage.py createcachetable
 python manage.py collectstatic --noinput --verbosity 2
-python manage.py makemigrations
+python manage.py makemigrations postgresql_app
 python manage.py migrate --noinput
 
 # Crear grupos 'admin' y 'user' si no existen

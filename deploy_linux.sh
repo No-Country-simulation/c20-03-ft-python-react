@@ -65,18 +65,7 @@ echo "Reconstruyendo y actualizando contenedores..."
 docker-compose -f "$COMPOSE_FILE" up -d
 
 # 8. Limpiar stashes antiguos si hay más de 2
-MAX_STASHES=2
-STASH_COUNT=$(git stash list | wc -l)
-if [ "$STASH_COUNT" -gt "$MAX_STASHES" ]; then
-  echo "Limpiando stashes antiguos..."
-  git stash list | tail -n +$(($MAX_STASHES + 1)) | while read -r stash; do
-    stash_ref=$(echo "$stash" | awk '{print $1}' | sed 's/://')
-    if [[ "$stash_ref" =~ ^stash@{[0-9]+}$ ]]; then
-      echo "Eliminando stash $stash_ref"
-      git stash drop "$stash_ref" || echo "No se pudo eliminar el stash $stash_ref"
-    else
-      echo "Referencia de stash inválida: $stash_ref"
-    fi
-  done
-fi
+echo "Eliminando todos los stashes existentes..."
+git stash clear
+echo "Todos los stashes han sido eliminados."
 
