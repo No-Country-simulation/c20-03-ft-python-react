@@ -33,8 +33,9 @@ fi
 echo "Conexión a la base de datos verificada correctamente."
 
 # Generar y aplicar migraciones
-python manage.py collectstatic --noinput
-python manage.py makemigrations postgresql_app
+python manage.py createcachetable
+python manage.py collectstatic --noinput --verbosity 2
+python manage.py makemigrations
 python manage.py migrate --noinput
 
 # Crear grupos 'admin' y 'user' si no existen
