@@ -36,3 +36,4 @@ deploy.sh
 deploy.sh_disable
 docker-compose.yml
 *_disable
+db/

@@ -13,6 +13,8 @@ Thumbs.db
 postgres_data/
 home/
 db/postgres_data/
+db/
+backend/postgresql_app/migrations/
 
 # Ignorar archivos de construcción de Python
 __pycache__/
@@ -26,6 +28,8 @@ frontend/.next/
 # Ignorar archivos de lock
 backend/requirements.txt.lock
 frontend/package-lock.json
+backend/staticfiles
+backend/media
 
 # Ignorar carpetas específicas de editor/IDE
 .vscode/
@@ -44,3 +48,5 @@ frontend/package-lock.json
 # Ignorar archivos temporales
 *.tmp
 *.bak
+
+db/

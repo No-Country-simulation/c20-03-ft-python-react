@@ -56,11 +56,15 @@ for SERVICE in "${SERVICES[@]}"; do
   fi
 done
 
-# 6. Levantar los nuevos contenedores
+# 6. Bajar los contenedores existentes y eliminar volúmenes
+echo "Deteniendo contenedores y eliminando volúmenes..."
+docker-compose -f $COMPOSE_FILE down -v
+
+# 7. Levantar los nuevos contenedores
 echo "Actualizando contenedores..."
 docker-compose -f $COMPOSE_FILE up -d
 
-# 7. Limpiar stashes antiguos si hay más de 2
+# 8. Limpiar stashes antiguos si hay más de 2
 MAX_STASHES=2
 STASH_COUNT=$(git stash list | wc -l)
 if [ "$STASH_COUNT" -gt "$MAX_STASHES" ]; then
@@ -75,3 +79,4 @@ if [ "$STASH_COUNT" -gt "$MAX_STASHES" ]; then
     fi
   done
 fi
+
