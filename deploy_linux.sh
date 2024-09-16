@@ -62,7 +62,6 @@ docker-compose -f "$COMPOSE_FILE" down -v
 
 # 7. Reconstruir los contenedores y levantar los nuevos contenedores
 echo "Reconstruyendo y actualizando contenedores..."
-docker-compose -f "$COMPOSE_FILE" build --no-cache
 docker-compose -f "$COMPOSE_FILE" up -d
 
 # 8. Limpiar stashes antiguos si hay más de 2

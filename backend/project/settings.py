@@ -18,7 +18,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Application definition
 INSTALLED_APPS = [
-    "postgresql_app.apps.PostgresqlAppConfig",
+    "postgresql_app",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
