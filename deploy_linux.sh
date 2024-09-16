@@ -16,7 +16,7 @@ COMPOSE_FILE=${2:-docker-compose.yml}
 REPO_DIR=${3:-/u/docker/examples}
 
 # 0. Nos movemos al directorio del repositorio
-cd $REPO_DIR || { echo "Directorio no encontrado: $REPO_DIR"; exit 1; }
+cd "$REPO_DIR" || { echo "Directorio no encontrado: $REPO_DIR"; exit 1; }
 
 # 1. Guardar cambios locales si hay alguno
 if [[ -n $(git status -s) ]]; then
@@ -46,23 +46,24 @@ for SERVICE in "${SERVICES[@]}"; do
     echo "La imagen Docker con el tag $IMAGE_TAG ya existe para $SERVICE. No es necesario construirla nuevamente."
   else
     echo "Construyendo la imagen Docker para $SERVICE con tag $IMAGE_TAG..."
-    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ./${SERVICE}/
+    docker build --no-cache -t "${IMAGE_NAME}:${IMAGE_TAG}" "./${SERVICE}/"
     sleep 10
 
     # Actualizar el archivo docker-compose.yml para usar el nuevo tag
     echo "Actualizando $COMPOSE_FILE para el servicio $SERVICE con el tag $IMAGE_TAG..."
-    sed -i "s|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|g" $COMPOSE_FILE
+    sed -i "s|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|g" "$COMPOSE_FILE"
     sleep 10
   fi
 done
 
 # 6. Bajar los contenedores existentes y eliminar volúmenes
 echo "Deteniendo contenedores y eliminando volúmenes..."
-docker-compose -f $COMPOSE_FILE down -v
+docker-compose -f "$COMPOSE_FILE" down -v
 
-# 7. Levantar los nuevos contenedores
-echo "Actualizando contenedores..."
-docker-compose -f $COMPOSE_FILE up -d
+# 7. Reconstruir los contenedores y levantar los nuevos contenedores
+echo "Reconstruyendo y actualizando contenedores..."
+docker-compose -f "$COMPOSE_FILE" build --no-cache
+docker-compose -f "$COMPOSE_FILE" up -d
 
 # 8. Limpiar stashes antiguos si hay más de 2
 MAX_STASHES=2
@@ -70,7 +71,7 @@ STASH_COUNT=$(git stash list | wc -l)
 if [ "$STASH_COUNT" -gt "$MAX_STASHES" ]; then
   echo "Limpiando stashes antiguos..."
   git stash list | tail -n +$(($MAX_STASHES + 1)) | while read -r stash; do
-    stash_ref=$(echo "$stash" | awk '{print $1}')
+    stash_ref=$(echo "$stash" | awk '{print $1}' | sed 's/://')
     if [[ "$stash_ref" =~ ^stash@{[0-9]+}$ ]]; then
       echo "Eliminando stash $stash_ref"
       git stash drop "$stash_ref" || echo "No se pudo eliminar el stash $stash_ref"
