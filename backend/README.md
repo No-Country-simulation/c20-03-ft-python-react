@@ -1,6 +1,6 @@
 # README.md
 
-## Tutorial:
+## Tutorial
 
 1. Solo es machete de ejemplo
 
@@ -16,4 +16,3 @@ docker exec -it django-back bash
 python manage.py makemigrations postgresql_app
 python manage.py migrate
 ```
-
