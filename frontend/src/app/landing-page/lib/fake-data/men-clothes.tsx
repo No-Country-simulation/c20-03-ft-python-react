@@ -344,13 +344,176 @@ export const JeansHombre = [
     },
 ]
 
+export const BotasHombre = [
+    {"imageURL": "https://columbiacl.vtexassets.com/arquivos/ids/362446-1600-auto?v=638479256932500000&width=1600&height=auto&aspect=true",
+        "name": "Botín Hombre Transverse Hike Wateproof Negro",
+        "description": "Un resistente zapato de senderismo impermeable que ofrece excelente tracción y comodidad.",
+        "category": "Calzado",
+        "color": "Negro",
+        "gender": "Hombre",
+        "garment_type": "Botin",
+        "price": 0,
+        // table also contains create at column
+    },
+    {"imageURL": "https://columbiacl.vtexassets.com/arquivos/ids/321411-1600-auto?v=638240114256100000&width=1600&height=auto&aspect=true",
+        "name": "Botín Hombre Newton Ridge Plus II Waterproof",
+        "description": "Un resistente zapato de senderismo impermeable que ofrece excelente tracción y comodidad.",
+        "category": "Calzado",
+        "color": "Cafe",
+        "gender": "Hombre",
+        "garment_type": "Botin",
+        "price": 0,
+        // table also contains create at column
+    },  
+    {"imageURL": "https://columbiacl.vtexassets.com/arquivos/ids/361404-1600-auto?v=638479250868200000&width=1600&height=auto&aspect=true",
+        "name": "Botín Hombre Newton Ridge Plus II Waterproof",
+        "description": "Un resistente zapato de senderismo impermeable que ofrece excelente tracción y comodidad.",
+        "category": "Calzado",
+        "color": "Negro",
+        "gender": "Hombre",
+        "garment_type": "Botin",
+        "price": 0,
+        // table also contains create at column
+    },
+    {"imageURL": "https://columbiacl.vtexassets.com/arquivos/ids/362247-1600-auto?v=638479255752070000&width=1600&height=auto&aspect=true",
+        "name": "Botín Hombre Newton Ridge II Suede Waterproof",
+        "description": "Una bota de senderismo duradera y liviana en gamuza, diseñada para brindar comodidad, protección y estilo.",
+        "category": "Calzado",
+        "color": "Cafe",
+        "gender": "Hombre",
+        "garment_type": "Botin",
+        "price": 0,
+        // table also contains create at column
+    },
+]
+
+export const ZapatillasHombre = [
+    {"imageURL": "https://nikeclprod.vtexassets.com/arquivos/ids/160788-1200-1200?v=637654399741130000&width=1200&height=1200&aspect=true",
+        "name": "Nike Air Force 1 '07",
+        "description": "El fulgor vive en el Nike Air Force 1 ’07, el modelo original de básquetbol que da un toque novedoso a las características más recordadas: revestimientos con costuras duraderas, acabados impecables y la cantidad perfecta de destellos para que brilles.",
+        "category": "Calzado",
+        "color": "Blanco",
+        "gender": "Hombre",
+        "garment_type": "Zapatilla",
+        "price": 0,
+        // table also contains create at column
+    },
+    {"imageURL": "https://nikeclprod.vtexassets.com/arquivos/ids/723384-1200-1200?v=638241048856100000&width=1200&height=1200&aspect=true",
+        "name": "Air Jordan 1 Low",
+        "description": "¿Quieres comodidad todo el día, todos los días? La tenemos. El AJ1 Low cuenta con todos los looks del calzado original de básquetbol, con menos peso y un perfil elegante. Además, van con cualquier atuendo: solo amarra las agujetas y ponte en marcha.",
+        "category": "Calzado",
+        "color": "Blanco",
+        "gender": "Hombre",
+        "garment_type": "Zapatilla",
+        "price": 0,
+        // table also contains create at column
+    },
+    {"imageURL": "https://nikeclprod.vtexassets.com/arquivos/ids/1058621-1200-1200?v=638557103476970000&width=1200&height=1200&aspect=true",
+        "name": "Nike P-6000",
+        "description": "Los P-6000 son una combinación de tenis Pegasus anteriores, llevan las carreras de principios de los años 2000 a la era moderna. Con malla ventilada y líneas deportivas, son la combinación perfecta de looks llamativos y comodidad transpirable.",
+        "category": "Calzado",
+        "color": "Blanco",
+        "gender": "Hombre",
+        "garment_type": "Zapatilla",
+        "price": 0,
+        // table also contains create at column
+    },
+    {"imageURL": "https://nikeclprod.vtexassets.com/arquivos/ids/1031569-1200-1200?v=638548415690930000&width=1200&height=1200&aspect=true",
+        "name": "JORDAN MVP",
+        "description": "Quizá no inventamos el remix, pero al pensar en el material que teníamos para probar, hicimos una versión superfácil. Tomamos elementos de los AJ6, 7 y 8, para convertirlos en unos Zapatillas completamente nuevos que rinden homenaje a la primera ronda de 3 campeonatos victoriosos de MJ. Con detalles de cuero, tela y nobuk, estos Zapatillas rinden homenaje a un legado y al mismo tiempo te alientan a construir el tuyo.",
+        "category": "Calzado",
+        "color": "Rojo",
+        "gender": "Hombre",
+        "garment_type": "Zapatilla",
+        "price": 0,
+        // table also contains create at column
+    },
+]
+
+export const ZapatosHombre = [
+    {"imageURL": "https://cdn.guante.cl/27015-large_default/zapato-guante-colorado-negro-0035362-1614781.webp",
+        "name": "Zapato colorado",
+        "description": "Descubre la combinación perfecta de tecnología y estilo con el zapato Colorado de cuero negro. Su tecnología G-WALK te proporciona la comodidad que necesitas para cada paso que des y en toda ocasión. Poseen una planta G-GRIP otorgando mayor sujeción y estabilidad en diferentes superficies. Ideal para el profesional moderno, este zapato es una inversión en versatilidad y sofisticación.",
+        "category": "Calzado",
+        "color": "Negro",
+        "gender": "Hombre",
+        "garment_type": "Zapato",
+        "price": 0,
+        // table also contains create at column
+    },
+    {"imageURL": "https://cdn.guante.cl/28808-large_default/zapato-guante-prince-marino-0035546-1652492.webp",
+        "name": "Zapato prince",
+        "description": "Descubre la combinación perfecta de tecnología y estilo con el zapato Prince de cuero negro. Su tecnología G-WALK te proporciona la comodidad que necesitas para cada paso que des y en toda ocasión. Poseen una planta G-GRIP otorgando mayor sujeción y estabilidad en diferentes superficies. Ideal para el profesional moderno, este zapato es una inversión en versatilidad y sofisticación.",
+        "category": "Calzado",
+        "color": "Azul",
+        "gender": "Hombre",
+        "garment_type": "Zapato",
+        "price": 0,
+        // table also contains create at column
+    },
+    {"imageURL": "https://cdn.guante.cl/26640-large_default/zapato-guante-pulso-nantes-marino-0034817-1181014.webp",
+        "name": "Zapato nantes",
+        "description": "El zapato NANTES de cuero color marino, te ofrece la versatilidad que buscas. Su diseño contemporáneo te permite expresar tu estilo en cualquier entorno. Gracias a su tecnología G-Walk con plantilla Bac-control, te proporciona una protección antibacterial efectiva, ayudando a eliminar el 99,9% de las bacterias que producen el mal olor. Camina con confianza y frescura durante todo el día.",
+        "category": "Calzado",
+        "color": "Azul",
+        "gender": "Hombre",
+        "garment_type": "Zapato",
+        "price": 0,
+        // table also contains create at column
+    },
+    {"imageURL": "https://cdn.guante.cl/27523-large_default/zapato-guante-president-suela-president-chocolate-0035436-1418821.webp",
+        "name": "Zapato president",
+        "description": "Nuestro zapato Suela President de color chocolate, son desarrollados con cosido Goodyear Welt, que es uno de los métodos artesanales más antiguos. Consiste en una doble costura, la primera une el cuero del zapato a la vira y a la planta, la segunda consiste en una costura que une la vira a la suela. Entregando una resistencia y durabilidad inigualables. Se aplica una pasta de corcho en la parte central del zapato que funciona como aislante, además de adquirir la forma de la planta ajustándose a la pisada.",
+        "category": "Calzado",
+        "color": "Cafe",
+        "gender": "Hombre",
+        "garment_type": "Zapato",
+        "price": 0,
+        // table also contains create at column
+    },
+]
+
+export const CinturonesHombre = [
+    {"imageURL": "https://trialcl.vtexassets.com/arquivos/ids/2994218-1200-1595?v=638496058362500000&width=1200&height=1595&aspect=true",
+        "name": "Cinturón formal liso",
+        "description": "Cinturón básico Trial en color café , De nuestra línea de accesorios de manufactura Italiana. Hebilla metálica, 3,5 cm de ancho.",
+        "category": "Accesorio",
+        "color": "Cafe",
+        "gender": "Hombre",
+        "garment_type": "Cinturon",
+        "price": 0,
+        // table also contains create at column
+    },
+]
+
+export const CorbataHombre = [
+    {"imageURL": "https://trialcl.vtexassets.com/arquivos/ids/3113185-1200-1595?v=638496122066200000&width=1200&height=1595&aspect=true",
+        "name": "Corbata formal luxury seda",
+        "description": "Corbata de hombre de la línea Luxury con microdiseño en tono azul marino, desarrollada en 100% seda. Ancho 7,5cm",
+        "category": "Accesorio",
+        "color": "Azul",
+        "gender": "Hombre",
+        "garment_type": "Corbata",
+        "price": 0,
+        // table also contains create at column
+    },
+    {"imageURL": "https://trialcl.vtexassets.com/arquivos/ids/3274656-1200-1595?v=638602789915730000&width=1200&height=1595&aspect=true",
+        "name": "Corbata hombre formal seda travel",
+        "description": "Composición 100% seda",
+        "category": "Accesorio",
+        "color": "Gris",
+        "gender": "Hombre",
+        "garment_type": "Corbata",
+        "price": 0,
+        // table also contains create at column
+    }
+]
+
 /*
 {"imageURL": "",
 "name": "",
 "description": "",
 "category": "",
-"size": "",
-"shoe_size": 0,
 "color": "",
 "gender": "",
 "garment_type": "",
