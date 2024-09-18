@@ -1,7 +1,7 @@
 import FlashSale from "./landing-page/ui/flash-sale/flash-sale";
 import LandingPageCategories from "./landing-page/ui/categorias/categories";
 import MasVendidos from "./landing-page/ui/mas-vendidos/mas-vendidos";
-import Navbar from './components/Navbar';
+import Navbar from './landing-page/ui/navbar/Navbar';
 
 import { testProductData } from "./landing-page/lib/utils";
 
