@@ -23,3 +23,8 @@ export function testProductData(numberOfItems: number) { //mockup data, delete a
     return testData;
 }
 
+export function fetchAllData(){
+
+    let data: flashSaleDataInterface[] = [];
+    return data;
+}
