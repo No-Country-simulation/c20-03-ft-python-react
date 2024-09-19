@@ -9,21 +9,41 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer, Toke
 from rest_framework.exceptions import NotAuthenticated, PermissionDenied
 from .models import Product, ProductVariant, Cart, PurchaseHistory
 from .serializers import ProductSerializer, UserSerializer, CartSerializer, PurchaseHistorySerializer
+from django.db import DatabaseError
+import traceback  # Para obtener información detallada del error
 
-# View to create a product
+# View to create a product with error handling
 @swagger_auto_schema(method='post', request_body=ProductSerializer)
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_product(request):
-    if not request.user.groups.filter(name='admin').exists():
-        raise PermissionDenied('You do not have permissions to create products.')
+    try:
+        if not request.user.groups.filter(name='admin').exists():
+            raise PermissionDenied('You do not have permissions to create products.')
 
-    serializer = ProductSerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-    return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer = ProductSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    except PermissionDenied as e:
+        return Response({'error': str(e)}, status=status.HTTP_403_FORBIDDEN)
+
+    except ValidationError as e:
+        return Response({'error': e.message_dict}, status=status.HTTP_400_BAD_REQUEST)
+
+    except DatabaseError as e:
+        return Response({'error': 'Database error', 'details': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    except Exception as e:
+        # Captura cualquier otro error inesperado
+        error_trace = traceback.format_exc()  # Obtener el detalle completo del error
+        return Response({
+            'error': 'An unexpected error occurred.',
+            'details': str(e),
+            'trace': error_trace  # Enviar la traza del error para mayor detalle
+        }, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 # View to get details of the product variant
 @swagger_auto_schema(method='get', responses={200: ProductSerializer})

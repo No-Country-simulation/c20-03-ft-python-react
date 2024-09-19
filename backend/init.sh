@@ -34,7 +34,8 @@ echo "Database connection verified successfully."
 
 # Generate and apply migrations
 python manage.py createcachetable
-python manage.py collectstatic --noinput --verbosity 2
+#python manage.py collectstatic --noinput --verbosity 2
+python manage.py collectstatic --noinput
 python manage.py makemigrations postgresql_app
 python manage.py migrate --noinput
 
