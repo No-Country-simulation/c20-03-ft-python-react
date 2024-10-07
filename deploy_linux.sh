@@ -3,17 +3,25 @@
 # Función para mostrar el manual de uso
 mostrar_manual() {
   echo "Uso del script:"
-  echo "  $0 [rama] [archivo-compose] [directorio-repo]"
-  echo "Este script acepta tres argumentos opcionales:"
+  echo "  $0 [rama] [archivo-compose] [directorio-repo] [credenciales-git]"
+  echo "Este script acepta cuatro argumentos opcionales:"
   echo "  1. Rama de Git (por defecto 'main')."
   echo "  2. Archivo docker-compose (por defecto 'docker-compose.yml')."
   echo "  3. Directorio del repositorio (por defecto '/u/docker/examples/c20-03-ft-python-react')."
+  echo "  4. Clave SSH de Git (opcional)."
 }
 
-# Obtener la rama, el archivo compose y el directorio del repositorio como argumentos o usar valores por defecto
+# Obtener la rama, el archivo compose, el directorio del repositorio y las credenciales como argumentos o usar valores por defecto
 BRANCH=${1:-main}
 COMPOSE_FILE=${2:-docker-compose.yml}
 REPO_DIR=${3:-/u/docker/examples}
+GIT_CREDENTIALS=${4:-}
+
+# Si se pasa la clave SSH, usarla
+if [[ -n "$GIT_CREDENTIALS" ]]; then
+  echo "Usando credenciales SSH: $GIT_CREDENTIALS"
+  export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/$GIT_CREDENTIALS -o StrictHostKeyChecking=no"
+fi
 
 # 0. Nos movemos al directorio del repositorio
 cd "$REPO_DIR" || { echo "Directorio no encontrado: $REPO_DIR"; exit 1; }
@@ -68,4 +76,3 @@ docker-compose -f "$COMPOSE_FILE" up -d
 echo "Eliminando todos los stashes existentes..."
 git stash clear
 echo "Todos los stashes han sido eliminados."
-
