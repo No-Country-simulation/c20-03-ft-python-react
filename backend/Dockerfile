@@ -1,13 +1,13 @@
-# Dockerfile para django-back
+# Dockerfile for django-back
 FROM python:3.12.5-slim
 
-# Establecer el directorio de trabajo dentro del contenedor
+# Set the working directory inside the container
 WORKDIR /app
 
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 
-# Instalar dependencias necesarias
+# Install necessary dependencies
 RUN apt-get update && apt-get install -y \
     libpq-dev \
     gcc \
@@ -19,26 +19,26 @@ RUN apt-get update && apt-get install -y \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-# Actualizar pip
+# Upgrade pip
 RUN pip install --upgrade pip
 
-# Copiar los archivos de requerimientos
+# Copy the requirements file
 COPY requirements.txt .
 
-# Instalar dependencias de Python
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copiar el resto de los archivos de la aplicación
+# Copy the rest of the application files
 COPY . .
 
-# Copiar el archivo de configuración de Nginx
+# Copy the Nginx configuration file
 COPY nginx.conf /etc/nginx/nginx.conf
 
-# Exponer el puerto en el que Nginx estará escuchando
+# Expose the port that Nginx will listen on
 EXPOSE 80
 
-# Hacer ejecutable el script init.sh
+# Make the init.sh script executable
 RUN chmod +x init.sh
 
-# Comando por defecto para ejecutar el script init.sh
+# Default command to run the init.sh script
 CMD ["./init.sh"]

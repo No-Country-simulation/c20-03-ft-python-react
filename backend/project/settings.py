@@ -18,7 +18,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Application definition
 INSTALLED_APPS = [
-    "postgresql_app.apps.PostgresqlAppConfig",
+    "postgresql_app",
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -44,8 +44,8 @@ REST_FRAMEWORK = {
 }
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=5),
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=1),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=2),
     'ROTATE_REFRESH_TOKENS': False,
     'BLACKLIST_AFTER_ROTATION': False,
     'UPDATE_LAST_LOGIN': False,
@@ -76,9 +76,9 @@ LOGGING = {
 }
 
 # Cookies security settings
-CSRF_COOKIE_SECURE = not DEBUG  # Usar solo HTTPS para CSRF cookies en producción
-SESSION_COOKIE_SECURE = not DEBUG  # Usar solo HTTPS para cookies de sesión en producción
-SECURE_SSL_REDIRECT = False # Debido a que usamos cloudflare
+CSRF_COOKIE_SECURE = not DEBUG 
+SESSION_COOKIE_SECURE = not DEBUG  
+SECURE_SSL_REDIRECT = False # CDN cloudflare
 SECURE_BROWSER_XSS_FILTER = True
 X_FRAME_OPTIONS = 'DENY'
 SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -93,7 +93,7 @@ SWAGGER_SETTINGS = {
             'description': 'Enter your JWT token in the format **Bearer <token>**',
         }
     },
-    'USE_SESSION_AUTH': False,  # Deshabilitar la autenticación de sesión en Swagger
+    'USE_SESSION_AUTH': False,  #
     'DEFAULT_AUTO_SCHEMA_CLASS': 'drf_yasg.inspectors.SwaggerAutoSchema',
     'SECURITY': [
         {

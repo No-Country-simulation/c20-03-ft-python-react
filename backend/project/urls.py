@@ -7,18 +7,18 @@ from rest_framework import permissions
 from django.conf import settings
 import os
 
-# Define una clase generadora de esquema personalizada para permitir ambos esquemas
+# Define a custom schema generator class to allow both HTTP and HTTPS
 class BothHttpAndHttpsSchemaGenerator(OpenAPISchemaGenerator):
     def get_schema(self, request=None, public=False):
         schema = super().get_schema(request, public)
-        # Permitir tanto http como https
+        # Allow both HTTP and HTTPS
         schema.schemes = ["http", "https"]
         return schema
 
-# Define la URL base del Swagger según el entorno
+# Define the base URL for Swagger based on the environment
 swagger_base_url = os.environ.get('SWAGGER_BASE_URL', 'http://localhost:8000')
 
-# Define el esquema con el esquema y el host especificados
+# Define the schema with the specified scheme and host
 schema_view = get_schema_view(
     openapi.Info(
         title="eCommerce NoCountry",
@@ -30,13 +30,13 @@ schema_view = get_schema_view(
     ),
     public=True,
     permission_classes=[permissions.AllowAny],
-    generator_class=BothHttpAndHttpsSchemaGenerator,  # Usa la clase generadora personalizada
-    url=swagger_base_url,  # Configurar URL basado en el entorno
+    generator_class=BothHttpAndHttpsSchemaGenerator,  # Use the custom generator class
+    url=swagger_base_url,  # Set URL based on the environment
 )
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('api/', include('postgresql_app.urls')),  # Incluye URLs de postgresql_app
+    path('api/', include('postgresql_app.urls')),  # Include URLs from postgresql_app
     path('swagger/', schema_view.with_ui(
         'swagger',
         cache_timeout=0
@@ -46,4 +46,3 @@ urlpatterns = [
         cache_timeout=0
     ), name='schema-redoc'),
 ]
-

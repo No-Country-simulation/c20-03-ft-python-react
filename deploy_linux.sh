@@ -3,20 +3,28 @@
 # Función para mostrar el manual de uso
 mostrar_manual() {
   echo "Uso del script:"
-  echo "  $0 [rama] [archivo-compose] [directorio-repo]"
-  echo "Este script acepta tres argumentos opcionales:"
+  echo "  $0 [rama] [archivo-compose] [directorio-repo] [credenciales-git]"
+  echo "Este script acepta cuatro argumentos opcionales:"
   echo "  1. Rama de Git (por defecto 'main')."
   echo "  2. Archivo docker-compose (por defecto 'docker-compose.yml')."
   echo "  3. Directorio del repositorio (por defecto '/u/docker/examples/c20-03-ft-python-react')."
+  echo "  4. Clave SSH de Git (opcional)."
 }
 
-# Obtener la rama, el archivo compose y el directorio del repositorio como argumentos o usar valores por defecto
+# Obtener la rama, el archivo compose, el directorio del repositorio y las credenciales como argumentos o usar valores por defecto
 BRANCH=${1:-main}
 COMPOSE_FILE=${2:-docker-compose.yml}
 REPO_DIR=${3:-/u/docker/examples}
+GIT_CREDENTIALS=${4:-}
+
+# Si se pasa la clave SSH, usarla
+if [[ -n "$GIT_CREDENTIALS" ]]; then
+  echo "Usando credenciales SSH: $GIT_CREDENTIALS"
+  export GIT_SSH_COMMAND="ssh -i $HOME/.ssh/$GIT_CREDENTIALS -o StrictHostKeyChecking=no"
+fi
 
 # 0. Nos movemos al directorio del repositorio
-cd $REPO_DIR || { echo "Directorio no encontrado: $REPO_DIR"; exit 1; }
+cd "$REPO_DIR" || { echo "Directorio no encontrado: $REPO_DIR"; exit 1; }
 
 # 1. Guardar cambios locales si hay alguno
 if [[ -n $(git status -s) ]]; then
@@ -46,37 +54,25 @@ for SERVICE in "${SERVICES[@]}"; do
     echo "La imagen Docker con el tag $IMAGE_TAG ya existe para $SERVICE. No es necesario construirla nuevamente."
   else
     echo "Construyendo la imagen Docker para $SERVICE con tag $IMAGE_TAG..."
-    docker build -t ${IMAGE_NAME}:${IMAGE_TAG} ./${SERVICE}/
+    docker build --no-cache -t "${IMAGE_NAME}:${IMAGE_TAG}" "./${SERVICE}/"
     sleep 10
 
     # Actualizar el archivo docker-compose.yml para usar el nuevo tag
     echo "Actualizando $COMPOSE_FILE para el servicio $SERVICE con el tag $IMAGE_TAG..."
-    sed -i "s|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|g" $COMPOSE_FILE
+    sed -i "s|image: ${IMAGE_NAME}:.*|image: ${IMAGE_NAME}:${IMAGE_TAG}|g" "$COMPOSE_FILE"
     sleep 10
   fi
 done
 
 # 6. Bajar los contenedores existentes y eliminar volúmenes
 echo "Deteniendo contenedores y eliminando volúmenes..."
-docker-compose -f $COMPOSE_FILE down -v
+docker-compose -f "$COMPOSE_FILE" down -v
 
-# 7. Levantar los nuevos contenedores
-echo "Actualizando contenedores..."
-docker-compose -f $COMPOSE_FILE up -d
+# 7. Reconstruir los contenedores y levantar los nuevos contenedores
+echo "Reconstruyendo y actualizando contenedores..."
+docker-compose -f "$COMPOSE_FILE" up -d
 
 # 8. Limpiar stashes antiguos si hay más de 2
-MAX_STASHES=2
-STASH_COUNT=$(git stash list | wc -l)
-if [ "$STASH_COUNT" -gt "$MAX_STASHES" ]; then
-  echo "Limpiando stashes antiguos..."
-  git stash list | tail -n +$(($MAX_STASHES + 1)) | while read -r stash; do
-    stash_ref=$(echo "$stash" | awk '{print $1}')
-    if [[ "$stash_ref" =~ ^stash@{[0-9]+}$ ]]; then
-      echo "Eliminando stash $stash_ref"
-      git stash drop "$stash_ref" || echo "No se pudo eliminar el stash $stash_ref"
-    else
-      echo "Referencia de stash inválida: $stash_ref"
-    fi
-  done
-fi
-
+echo "Eliminando todos los stashes existentes..."
+git stash clear
+echo "Todos los stashes han sido eliminados."

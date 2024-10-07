@@ -8,11 +8,10 @@ Este proyecto es una aplicación web de e-commerce que combina un backend desarr
 
 ### Colaboradores
 
-- **Lucas Catriel Ballesteros** - [LinkedIn](https://www.linkedin.com/) - **Backend Developer**
 - **Maira Zamer** - [LinkedIn](https://www.linkedin.com/in/maira-zamer/) - **Frontend Developer**
 - **Alejo Colazurda** - [LinkedIn](https://www.linkedin.com/in/alejo-colazurda/) - **Frontend Developer**
 - **Vicente Soto** - [LinkedIn](https://www.linkedin.com/in/vicentesotoarriagada/) - **Frontend Developer**
-- **Alejandro Villalba** - [LinkedIn](https://www.linkedin.com/in/avillalba96/) - **DevOps Engineer**
+- **Alejandro Villalba** - [LinkedIn](https://www.linkedin.com/in/avillalba96/) - **DevOps Engineer / Backend Developer**
 
 ### Tecnologías Utilizadas
 

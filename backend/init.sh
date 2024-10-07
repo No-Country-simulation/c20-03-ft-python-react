@@ -1,53 +1,55 @@
 #!/bin/bash
 set -euo pipefail
 
-# Imprimir información de conexión de la base de datos
-echo "Conectando a la base de datos:"
+# Print database connection information
+echo "Connecting to the database:"
 echo "  HOST: ${DATABASE_HOST}"
-echo "  PUERTO: ${DATABASE_PORT}"
-echo "  NOMBRE: ${DATABASE_NAME}"
-echo "  USUARIO: ${DATABASE_USER}"
+echo "  PORT: ${DATABASE_PORT}"
+echo "  NAME: ${DATABASE_NAME}"
+echo "  USER: ${DATABASE_USER}"
 
-# Instalar dependencias de Python (con caché)
+# Install Python dependencies (with cache)
 pip install -r requirements.txt
 
-# Verificar la conexión a la base de datos
-echo "Verificando conexión a la base de datos..."
+# Verify the database connection
+echo "Verifying database connection..."
 
 DB_CHECK=$(python manage.py shell -c "
 from django.db import connections;
 try:
     connections['default'].cursor()
-    print('Conexión a la base de datos exitosa.')
+    print('Database connection successful.')
 except Exception as e:
-    print(f'Error de conexión a la base de datos: {e}')
+    print(f'Database connection error: {e}')
 ")
 
 echo "$DB_CHECK"
 
-if [[ "$DB_CHECK" == *"Error de conexión a la base de datos"* ]]; then
-  echo "Fallo al conectar con la base de datos. Abortando..."
+if [[ "$DB_CHECK" == *"Database connection error"* ]]; then
+  echo "Failed to connect to the database. Aborting..."
   exit 1
 fi
 
-echo "Conexión a la base de datos verificada correctamente."
+echo "Database connection verified successfully."
 
-# Generar y aplicar migraciones
+# Generate and apply migrations
+python manage.py createcachetable
+#python manage.py collectstatic --noinput --verbosity 2
 python manage.py collectstatic --noinput
 python manage.py makemigrations postgresql_app
 python manage.py migrate --noinput
 
-# Crear grupos 'admin' y 'user' si no existen
+# Create 'admin' and 'user' groups if they don't exist
 python manage.py shell -c "
 from django.contrib.auth.models import Group;
 Group.objects.get_or_create(name='admin');
 Group.objects.get_or_create(name='user');
 "
 
-# Iniciar Nginx en segundo plano
+# Start Nginx in the background
 nginx &
 
-# Iniciar Gunicorn con variables de entorno
+# Start Gunicorn with environment variables
 exec gunicorn --bind 0.0.0.0:8000 project.wsgi:application \
     --workers ${GUNICORN_WORKERS:-4} \
     --threads ${GUNICORN_THREADS:-2} \
@@ -57,5 +59,4 @@ exec gunicorn --bind 0.0.0.0:8000 project.wsgi:application \
     --max-requests-jitter ${GUNICORN_MAX_REQUESTS_JITTER:-50} \
     --access-logfile '-' \
     --error-logfile '-' \
-    --log-level 'debug'
-
+    --log-level 'log'
